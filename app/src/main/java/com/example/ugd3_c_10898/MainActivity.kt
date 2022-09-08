@@ -27,6 +27,7 @@ class MainActivity : AppCompatActivity() {
         mainLayout = findViewById(R.id.loginLayout)
         val btnRegister : Button = findViewById(R.id.btnRegister)
         val btnLogin : Button= findViewById(R.id.btnLogin)
+        val btnClear : Button= findViewById(R.id.btnClear)
 
         btnLogin.setOnClickListener(View.OnClickListener {
             var checkLogin = false
@@ -56,5 +57,12 @@ class MainActivity : AppCompatActivity() {
             val moveRegister = Intent ( this@MainActivity, RegisterActivity::class.java)
             startActivity(moveRegister)
         })
+
+        btnClear.setOnClickListener{
+            inputUsername.getEditText()?.setText("")
+            inputPassword.getEditText()?.setText("")
+
+            Snackbar.make(mainLayout, "Text Cleared Success", Snackbar.LENGTH_LONG).show()
+        }
     }
 }
