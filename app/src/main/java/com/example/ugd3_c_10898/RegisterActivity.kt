@@ -31,16 +31,6 @@ class RegisterActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register)
 
-        val dateFormatter = new SimpleDateFormat("dd-MM-yyyy")
-
-        val tvDateResult : Textview = findViewById(R.id.tv_dateresult)
-        val btDatePicker : Button = findViewById(R.id.bt_datepicker)
-        btDatePicker.setOnClickListener(View.OnClickListener() {
-            onClick(View) {
-                showDateDialog();
-            }
-        });
-
         setTitle("Register Cycle Fast")
         inputUsername = findViewById(R.id.inputUsername2)
         inputPassword = findViewById(R.id.inputPassword2)
