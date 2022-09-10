@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    >
+    android:background="#FFFFFF"
+    android:orientation="vertical">
 
     <TextView
         android:id="@+id/txtMerk"
@@ -40,7 +40,7 @@
         android:layout_marginStart="32dp"
         android:src="@drawable/icon_mobil"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.519"
+        app:layout_constraintHorizontal_bias="0.65"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

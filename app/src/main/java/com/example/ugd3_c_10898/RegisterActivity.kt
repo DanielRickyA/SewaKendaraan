@@ -22,10 +22,10 @@ class RegisterActivity : AppCompatActivity() {
     private lateinit var inputNoTelp: TextInputLayout
     private lateinit var registerLayout: ConstraintLayout
 
-    private DatePickerDialog datePickerDialog;
-    private SimpleDateFormat dateFormatter;
-    private TextView tvDateResult;
-    private Button btDatePicker;
+//    private DatePickerDialog datePickerDialog;
+//    private SimpleDateFormat dateFormatter;
+//    private TextView tvDateResult;
+//    private Button btDatePicker;
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,7 +46,7 @@ class RegisterActivity : AppCompatActivity() {
             val username : String = inputUsername.getEditText()?.getText().toString()
             val password : String = inputUsername.getEditText()?.getText().toString()
             val email : String = inputEmail.getEditText()?.getText().toString()
-            val tgl : String = inputTanggalLahir.getEditText()?.getText()
+//            val tgl : String = inputTanggalLahir.getEditText()?.getText()
         })
     }
 }
