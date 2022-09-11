@@ -15,8 +15,8 @@ class MainActivity : AppCompatActivity() {
     private lateinit var mainLayout:ConstraintLayout
     lateinit var  mBundle: Bundle
 
-    lateinit var vUsername : String
-    lateinit var vPassword : String
+    var vUsername : String = ""
+    var vPassword : String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,6 +32,7 @@ class MainActivity : AppCompatActivity() {
 
         val btnRegister = findViewById<Button>(R.id.btnRegister)
         val btnLogin:Button=findViewById(R.id.btnLogin)
+        val btnClear:Button=findViewById(R.id.btnClear)
 
         if(intent.getBundleExtra("register")!=null){
             getBundle()
@@ -41,12 +42,19 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
+        btnClear.setOnClickListener{
+            inputUsername.getEditText()?.setText("")
+            inputPassword.getEditText()?.setText("")
+
+            Snackbar.make(mainLayout, "Text Berhasil Dihapus",Snackbar.LENGTH_LONG).show()
+        }
+
 
 
 
 
         btnLogin.setOnClickListener(View.OnClickListener {
-            var checkLogin=false
+            var checkLogin=true
             val username:String=inputUsername.getEditText()?.getText().toString()
             val password:String=inputPassword.getEditText()?.getText().toString()
 
@@ -59,11 +67,19 @@ class MainActivity : AppCompatActivity() {
                 inputPassword.setError("Password must be filled with text")
                 checkLogin=false
             }
-            if((username == "admin" && password== "admin") || (username==vUsername&&password==vPassword)) checkLogin=true
 
-            if(!checkLogin)return@OnClickListener
-            val moveHome=Intent(this@MainActivity,HomeActivity::class.java)
-            startActivity(moveHome)
+            if(username == "admin" && password== "admin"){
+                checkLogin=true
+            }else if(intent.getBundleExtra("register")!=null){
+
+                checkLogin=true
+            }
+
+            if(checkLogin){
+                val moveHome=Intent(this@MainActivity,HomeActivity::class.java)
+                startActivity(moveHome)
+            }
+
         })
         }
 
