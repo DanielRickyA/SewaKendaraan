@@ -8,6 +8,7 @@ import android.widget.Button
 import android.widget.DatePicker
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.google.android.material.snackbar.Snackbar
+import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 
 import java.text.SimpleDateFormat;
@@ -15,38 +16,28 @@ import java.util.Calendar;
 import java.util.Locale;
 
 class RegisterActivity : AppCompatActivity() {
-    private lateinit var inputUsername: TextInputLayout
-    private lateinit var inputPassword: TextInputLayout
-    private lateinit var inputEmail: TextInputLayout
-    private lateinit var inputTanggalLahir: TextInputLayout
-    private lateinit var inputNoTelp: TextInputLayout
-    private lateinit var registerLayout: ConstraintLayout
-
-//    private DatePickerDialog datePickerDialog;
-//    private SimpleDateFormat dateFormatter;
-//    private TextView tvDateResult;
-//    private Button btDatePicker;
+    private lateinit var username : TextInputEditText
+    private lateinit var password : TextInputEditText
+    private lateinit var btnRegister : Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register)
 
         setTitle("Register Cycle Fast")
-        inputUsername = findViewById(R.id.inputUsername2)
-        inputPassword = findViewById(R.id.inputPassword2)
-        inputEmail = findViewById(R.id.inputEmail)
-        inputTanggalLahir = findViewById(R.id.inputTL)
-        inputNoTelp = findViewById(R.id.inputNoTelp)
-        registerLayout = findViewById(R.id.registerLayout)
-        val btnActionRegister : Button = findViewById(R.id.btnActionRegister)
+//        var view = inflater.inflater()
+        username = findViewById(R.id.etUsername)
+        password = findViewById(R.id.etPassword)
+        btnRegister = findViewById(R.id.btnActionRegister)
 
-        btnActionRegister.setOnClickListener(View.OnClickListener {
-            var actionRegister = false
+        btnRegister.setOnClickListener{
+            val intent = Intent(this, MainActivity::class.java)
+            val mBundle = Bundle()
+            mBundle.putString("username",username.text.toString())
+            mBundle.putString("password",password.text.toString())
+            intent.putExtra("register", mBundle)
 
-            val username : String = inputUsername.getEditText()?.getText().toString()
-            val password : String = inputUsername.getEditText()?.getText().toString()
-            val email : String = inputEmail.getEditText()?.getText().toString()
-//            val tgl : String = inputTanggalLahir.getEditText()?.getText()
-        })
+            startActivity(intent)
+        }
     }
 }
