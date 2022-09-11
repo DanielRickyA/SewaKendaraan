@@ -10,59 +10,57 @@ import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputLayout
 
 class MainActivity : AppCompatActivity() {
-    private lateinit var inputUsername: TextInputLayout
-    private lateinit var inputPassword: TextInputLayout
-    private lateinit var mainLayout: ConstraintLayout
-    private lateinit var registerLayout: ConstraintLayout
+    private lateinit var inputUsername:TextInputLayout
+    private lateinit var inputPassword:TextInputLayout
+    private lateinit var mainLayout:ConstraintLayout
+    lateinit var  mBundle: Bundle
+
+    lateinit var vUsername : String
+    lateinit var vPassword : String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        getBundle()
 
-        //Title
-        setTitle("Login Cycle Fast")
+        setTitle("User Login")
 
-        inputUsername = findViewById(R.id.inputUsername)
-        inputPassword = findViewById(R.id.inputPassword)
-        mainLayout = findViewById(R.id.loginLayout)
-        val btnRegister : Button = findViewById(R.id.btnRegister)
-        val btnLogin : Button= findViewById(R.id.btnLogin)
-        val btnClear : Button= findViewById(R.id.btnClear)
+        inputUsername=findViewById(R.id.inputUsername)
+        inputPassword=findViewById(R.id.inputPassword)
+        mainLayout=findViewById(R.id.loginLayout)
+        val btnRegister = findViewById<Button>(R.id.btnRegister)
+        val btnLogin:Button=findViewById(R.id.btnLogin)
+
+        btnRegister.setOnClickListener{
+            val intent = Intent(this,RegisterActivity::class.java)
+            startActivity(intent)
+        }
 
         btnLogin.setOnClickListener(View.OnClickListener {
-            var checkLogin = false
-            val username: String = inputUsername.getEditText()?.getText().toString()
-            val password: String = inputPassword.getEditText()?.getText().toString()
+            var checkLogin=false
+            val username:String=inputUsername.getEditText()?.getText().toString()
+            val password:String=inputPassword.getEditText()?.getText().toString()
 
-            if (username.isEmpty()) {
-                inputUsername.setError("Username Must be Filled With Text")
-                checkLogin = false
-            }
-            if (password.isEmpty()) {
-                inputPassword.setError("Password Must be Filled With Text")
-                checkLogin = false
+            if(username.isEmpty()){
+                inputUsername.setError("Username must be filled with text")
+                checkLogin=false
             }
 
-            if(username == "admin" && password == "0898") checkLogin = true
+            if(password.isEmpty()){
+                inputPassword.setError("Password must be filled with text")
+                checkLogin=false
+            }
 
-            if(!checkLogin)
-                return@OnClickListener
-
-            val moveHome = Intent ( this@MainActivity, HomeActivity::class.java)
+            if(username==vUsername&&password==vPassword)checkLogin=true
+            if(!checkLogin)return@OnClickListener
+            val moveHome=Intent(this@MainActivity,HomeActivity::class.java)
             startActivity(moveHome)
         })
+    }
 
-        btnRegister.setOnClickListener(View.OnClickListener {
-
-            val moveRegister = Intent ( this@MainActivity, RegisterActivity::class.java)
-            startActivity(moveRegister)
-        })
-
-        btnClear.setOnClickListener{
-            inputUsername.getEditText()?.setText("")
-            inputPassword.getEditText()?.setText("")
-
-            Snackbar.make(mainLayout, "Text Cleared Success", Snackbar.LENGTH_LONG).show()
-        }
+    fun getBundle() {
+        mBundle = intent.getBundleExtra("register")!!
+        vUsername = mBundle.getString("username")!!
+        vPassword = mBundle.getString("password")!!
     }
 }
