@@ -23,13 +23,24 @@ class   HomeActivity : AppCompatActivity() {
 
         changeFragment(HomeFragment())
 
-        nav.setOnItemSelectedListener{item ->
-            when(item.itemId){
+        nav.setOnItemSelectedListener{item -> when(item.itemId){
                 R.id.home->{
                     changeFragment(HomeFragment())
                     true
                 }
-                else -> false
+                R.id.shopping->{
+                    changeFragment(ShoppingFragment())
+                    true
+                }
+                R.id.mail->{
+                    changeFragment(MailFragment())
+                    true
+                }
+                R.id.profile->{
+                    changeFragment(ProfileFragment())
+                    true
+                }
+                else->false
             }
         }
     }
