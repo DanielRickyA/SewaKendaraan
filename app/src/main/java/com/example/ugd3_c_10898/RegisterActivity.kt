@@ -25,10 +25,10 @@ class RegisterActivity : AppCompatActivity() {
         setContentView(R.layout.activity_register)
 
         setTitle("Register Cycle Fast")
-
+//        var view = inflater.inflater()
         username = findViewById(R.id.etUsername)
         password = findViewById(R.id.etPassword)
-        btnRegister = findViewById(R.id.btnRegister)
+        btnRegister = findViewById(R.id.btnActionRegister)
 
         btnRegister.setOnClickListener{
             val intent = Intent(this, MainActivity::class.java)
