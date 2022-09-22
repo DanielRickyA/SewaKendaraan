@@ -49,10 +49,6 @@ class MainActivity : AppCompatActivity() {
             Snackbar.make(mainLayout, "Text Berhasil Dihapus",Snackbar.LENGTH_LONG).show()
         }
 
-
-
-
-
         btnLogin.setOnClickListener(View.OnClickListener {
             var checkLogin=true
             val username:String=inputUsername.getEditText()?.getText().toString()
