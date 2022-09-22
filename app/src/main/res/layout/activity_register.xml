@@ -10,9 +10,9 @@
 
     <ImageView
         android:id="@+id/imageView2"
-        android:layout_width="111dp"
-        android:layout_height="99dp"
-        android:layout_marginTop="4dp"
+        android:layout_width="117dp"
+        android:layout_height="108dp"
+        android:layout_marginTop="16dp"
         android:src="@drawable/logo"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -129,7 +129,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="Register"
-            app:backgroundTint="#0055FF" />
+            android:textColor="#434242"
+            app:backgroundTint="#97AF9D67" />
 
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
