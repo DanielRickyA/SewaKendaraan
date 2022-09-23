@@ -77,6 +77,15 @@ class MainActivity : AppCompatActivity() {
             }
 
         })
+
+        val splashCheck = getSharedPreferences("isSplash", MODE_PRIVATE).getBoolean("splashCheck", true)
+
+        if(splashCheck == true){
+            startActivity(Intent(this@MainActivity, SplashScreen::class.java))
+            finish()
+        }
+            getSharedPreferences("isSplash", MODE_PRIVATE).edit()
+                .putBoolean("splashCheck", false).commit()
         }
 
         fun getBundle() {
