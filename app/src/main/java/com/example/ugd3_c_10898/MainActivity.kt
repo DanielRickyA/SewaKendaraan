@@ -50,7 +50,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         btnLogin.setOnClickListener(View.OnClickListener {
-            var checkLogin=true
+            var checkLogin=false
             val username:String=inputUsername.getEditText()?.getText().toString()
             val password:String=inputPassword.getEditText()?.getText().toString()
 

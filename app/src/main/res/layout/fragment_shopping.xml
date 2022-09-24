@@ -87,15 +87,17 @@
 
         <Button
             android:id="@+id/btnTambah"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="273dp"
+            android:layout_height="47dp"
             android:text="Tambah"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/linearLayout5"
-            app:layout_constraintVertical_bias="0.361" />
+            app:layout_constraintVertical_bias="0.361"
+            android:textColor="@color/black"
+            app:backgroundTint="#B5B593"/>
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnClear"

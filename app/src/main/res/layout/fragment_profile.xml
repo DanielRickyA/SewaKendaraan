@@ -43,11 +43,10 @@
             android:text="Edit Profile"
             android:textColor="#434242"
             app:backgroundTint="#97AF9D67"
-            app:layout_constraintBottom_toBottomOf="@+id/linearLayout4"
+            app:layout_constraintBottom_toTopOf="@+id/linearLayout4"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.385" />
+            app:layout_constraintTop_toBottomOf="@+id/imageView3" />
 
         <LinearLayout
             android:id="@+id/linearLayout4"
@@ -70,6 +69,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textAlignment="center"
+
                 android:text="Username" />
 
             <TextView

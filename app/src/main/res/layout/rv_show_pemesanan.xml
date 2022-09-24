@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/txtLokasi"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="60dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="5dp"
+        android:text="Lokasi"
+        app:layout_constraintBottom_toTopOf="@+id/rvLokasi"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <TextView
+        android:id="@+id/rvLokasi"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="836dp"
+        android:text="text view"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/txtLokasi" />
+
+    <TextView
+        android:id="@+id/txtModel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="114dp"
+        android:text="Model Kendaraan"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/rvLokasi"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/rvModel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="196dp"
+        android:layout_marginBottom="668dp"
+        android:text="TextView"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/txtModel"
+        app:layout_constraintTop_toBottomOf="@+id/txtModel"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <TextView
+        android:id="@+id/txtTanggalPinjam"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Tanggal Pinjam"
+        app:layout_constraintStart_toStartOf="@+id/rvLokasi"
+        app:layout_constraintTop_toBottomOf="@+id/rvLokasi" />
+
+    <TextView
+        android:id="@+id/rvTanggalPinjam"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        app:layout_constraintStart_toStartOf="@+id/txtTanggalPinjam"
+        app:layout_constraintTop_toBottomOf="@+id/txtTanggalPinjam" />
+
+    <TextView
+        android:id="@+id/txtTanggalKembali"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Tanggal Kembali"
+        app:layout_constraintStart_toStartOf="@+id/rvModel"
+        app:layout_constraintTop_toBottomOf="@+id/rvModel" />
+
+    <TextView
+        android:id="@+id/rvTanggalKembali"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        app:layout_constraintStart_toStartOf="@+id/txtTanggalKembali"
+        app:layout_constraintTop_toBottomOf="@+id/txtTanggalKembali" />
+</androidx.constraintlayout.widget.ConstraintLayout>
