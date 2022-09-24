@@ -1,4 +1,4 @@
-package com.example.ugd3_c_10898.room.user
+package com.example.ugd3_c_10898.room
 
 class Constant {
     companion object{
