@@ -22,7 +22,8 @@
             app:layout_constraintBottom_toTopOf="@+id/imageView3"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.457" />
 
         <ImageView
             android:id="@+id/imageView3"
@@ -34,103 +35,102 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.028" />
+            app:layout_constraintVertical_bias="0.0" />
 
         <Button
             android:id="@+id/EditButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="210dp"
             android:text="Edit Profile"
             android:textColor="#434242"
             app:backgroundTint="#97AF9D67"
-            app:layout_constraintBottom_toTopOf="@+id/linearLayout4"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageView3" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <LinearLayout
             android:id="@+id/linearLayout4"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_marginStart="32dp"
-            android:layout_marginTop="330dp"
-            android:layout_marginEnd="32dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginEnd="24dp"
             android:layout_marginBottom="50dp"
             android:orientation="vertical"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toBottomOf="@+id/EditButton">
 
             <TextView
                 android:id="@+id/txtUsernameProfil"
                 style="@style/TextAppearance.MaterialComponents.Headline5"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textAlignment="center"
+                android:text="Username"
 
-                android:text="Username" />
+                android:textAlignment="center" />
 
             <TextView
                 android:id="@+id/UsernameProfil"
                 style="@style/TextAppearance.MaterialComponents.Headline4"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@color/black"
                 android:text="text"
-                android:textAlignment="center" />
+                android:textAlignment="center"
+                android:textColor="@color/black" />
 
             <TextView
                 android:id="@+id/txtEmailProfil"
                 style="@style/TextAppearance.MaterialComponents.Headline5"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textAlignment="center"
-                android:text="Email" />
+                android:text="Email"
+                android:textAlignment="center" />
 
             <TextView
                 android:id="@+id/EmailProfil"
                 style="@style/TextAppearance.MaterialComponents.Headline4"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@color/black"
+                android:text="text"
                 android:textAlignment="center"
-                android:text="text" />
+                android:textColor="@color/black" />
 
             <TextView
                 android:id="@+id/txtTanggalLahir"
                 style="@style/TextAppearance.MaterialComponents.Headline5"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textAlignment="center"
-                android:text="Tanggal Lahir" />
+                android:text="Tanggal Lahir"
+                android:textAlignment="center" />
 
             <TextView
                 android:id="@+id/TanggalProfil"
                 style="@style/TextAppearance.MaterialComponents.Headline4"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@color/black"
+                android:text="text"
                 android:textAlignment="center"
-                android:text="text" />
+                android:textColor="@color/black" />
 
             <TextView
                 android:id="@+id/txtNomorTelepon"
                 style="@style/TextAppearance.MaterialComponents.Headline5"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textAlignment="center"
-                android:text="Nomor Telepon" />
+                android:text="Nomor Telepon"
+                android:textAlignment="center" />
 
             <TextView
                 android:id="@+id/NomorTelepon"
                 style="@style/TextAppearance.MaterialComponents.Headline4"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@color/black"
+                android:text="text"
                 android:textAlignment="center"
-                android:text="text" />
+                android:textColor="@color/black" />
         </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
