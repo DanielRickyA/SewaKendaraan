@@ -9,7 +9,7 @@ data class SewaMobil (
     @PrimaryKey(autoGenerate = true)
     val id : Int,
     val tujuan : String,
-    val tglPinjam : Date,
-    val tglKembali : Date,
+    val tglPinjam : String,
+    val tglKembali : String,
     val modelMobil : String
 )

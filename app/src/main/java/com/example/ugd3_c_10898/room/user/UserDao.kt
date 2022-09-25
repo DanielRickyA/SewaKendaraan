@@ -5,14 +5,20 @@ import androidx.room.*
 @Dao
 interface UserDao {
     @Insert
-    suspend fun addUser(user : User)
+     fun addUser(user : User)
 
     @Update
-    suspend fun updateUser(user: User)
+     fun updateUser(user: User)
 
     @Delete
-    suspend fun deleteUser(user: User)
+     fun deleteUser(user: User)
 
-    @Query("SELECT * FROM user WHERE id =:user_id")
-    suspend fun getUser(user_id: Int) : List<User>
+     @Query("SELECT * FROM user WHERE id =:user_id")
+     fun getUser(user_id: Int) : List<User>
+
+     @Query("SELECT * FROM user")
+     fun getUsers() : List<User>
+
+     @Query("SELECT * FROM user WHERE username =:username & password =:passowrd")
+     fun getUsersByUsername(username: String, passowrd: String) : List<User>
 }

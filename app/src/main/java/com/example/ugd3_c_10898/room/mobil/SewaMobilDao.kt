@@ -13,6 +13,6 @@ interface SewaMobilDao {
     @Delete
     suspend fun deleteUser(sewaMobil: SewaMobil)
 
-    @Query("SELECT * FROM user WHERE id =:sewaMobil_id")
-    suspend fun getUser(sewaMobil_id: Int) : List<SewaMobil>
+    @Query("SELECT * FROM SewaMobil WHERE id =:sewaMobil_id")
+    suspend fun getSewaMobil(sewaMobil_id: Int) : List<SewaMobil>
 }

@@ -46,12 +46,8 @@ class ShoppingFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val btn: Button = view.findViewById(R.id.btnTambah)
-        val clear: Button = view.findViewById(R.id.btnClearShop)
         btn.setOnClickListener {
             (activity as HomeActivity).changeFragment(rv_show_pemesanan())
-        }
-        clear.setOnClickListener{
-
         }
 
     }
