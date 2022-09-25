@@ -21,6 +21,7 @@ class RVMotorAdapter (private val data: Array<Motor>) : RecyclerView.Adapter<RVM
         holder.tvNamaMotor.text = curentItem.merkMotor
         holder.tvNamaPemilikMotor.text = curentItem.namaMotor
         holder.tvImageMotor.setImageResource(curentItem.imageMotor)
+
     }
 
     override fun getItemCount(): Int {

@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content">
 
     <TextView
         android:id="@+id/txtLokasi"
@@ -22,10 +22,9 @@
         android:id="@+id/rvLokasi"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="836dp"
         android:text="text view"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/txtLokasi" />
+        app:layout_constraintStart_toStartOf="@+id/txtLokasi"
+        tools:layout_editor_absoluteY="35dp" />
 
     <TextView
         android:id="@+id/txtModel"
@@ -45,14 +44,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="196dp"
-        android:layout_marginBottom="668dp"
         android:text="TextView"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/txtModel"
-        app:layout_constraintTop_toBottomOf="@+id/txtModel"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toBottomOf="@+id/txtModel" />
 
     <TextView
         android:id="@+id/txtTanggalPinjam"
@@ -75,9 +71,10 @@
         android:id="@+id/txtTanggalKembali"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="28dp"
         android:layout_marginTop="8dp"
         android:text="Tanggal Kembali"
-        app:layout_constraintStart_toStartOf="@+id/rvModel"
+        app:layout_constraintStart_toEndOf="@+id/txtTanggalPinjam"
         app:layout_constraintTop_toBottomOf="@+id/rvModel" />
 
     <TextView
