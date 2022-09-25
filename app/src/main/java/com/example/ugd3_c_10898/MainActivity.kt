@@ -1,29 +1,34 @@
 package com.example.ugd3_c_10898
 
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
 import androidx.constraintlayout.widget.ConstraintLayout
+import com.example.ugd3_c_10898.room.user.UserDB
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputLayout
 
 class MainActivity : AppCompatActivity() {
+    val db by lazy { UserDB(this) }
     private lateinit var inputUsername:TextInputLayout
     private lateinit var inputPassword:TextInputLayout
     private lateinit var mainLayout:ConstraintLayout
     lateinit var  mBundle: Bundle
-
+    var pref: SharedPreferences? = null
     var vUsername : String = ""
     var vPassword : String = ""
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         getSupportActionBar()?.hide()
 //        getBundle()
-
+        pref = getSharedPreferences("prefId", Context.MODE_PRIVATE)
         setTitle("User Login")
 
         inputUsername=findViewById(R.id.inputUsername)
@@ -63,9 +68,12 @@ class MainActivity : AppCompatActivity() {
                 inputPassword.setError("Password must be filled with text")
                 checkLogin=false
             }
-
-            if(username == "admin" && password== "admin"){
+            val user = db.userDao().getUsersByUsername(username,password)
+            if( user != null){
                 checkLogin=true
+                val edit : SharedPreferences.Editor = pref!!.edit()
+                edit.putInt("id",user.id)
+                edit.apply()
             }else if(intent.getBundleExtra("register")!=null){
 
                 checkLogin=true

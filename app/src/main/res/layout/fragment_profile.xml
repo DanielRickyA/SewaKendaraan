@@ -77,8 +77,9 @@
                 style="@style/TextAppearance.MaterialComponents.Headline4"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textAlignment="center"
-                android:text="" />
+                android:textColor="@color/black"
+                android:text="text"
+                android:textAlignment="center" />
 
             <TextView
                 android:id="@+id/txtEmailProfil"
@@ -93,8 +94,9 @@
                 style="@style/TextAppearance.MaterialComponents.Headline4"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:textColor="@color/black"
                 android:textAlignment="center"
-                android:text="" />
+                android:text="text" />
 
             <TextView
                 android:id="@+id/txtTanggalLahir"
@@ -109,8 +111,9 @@
                 style="@style/TextAppearance.MaterialComponents.Headline4"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:textColor="@color/black"
                 android:textAlignment="center"
-                android:text="" />
+                android:text="text" />
 
             <TextView
                 android:id="@+id/txtNomorTelepon"
@@ -125,8 +128,9 @@
                 style="@style/TextAppearance.MaterialComponents.Headline4"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:textColor="@color/black"
                 android:textAlignment="center"
-                android:text="" />
+                android:text="text" />
         </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
