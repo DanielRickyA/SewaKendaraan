@@ -11,5 +11,5 @@ data class User (
     val password : String,
     val email : String,
     val tglLahir : String,
-    val noHp : String
+    val noHp : Int
 )
