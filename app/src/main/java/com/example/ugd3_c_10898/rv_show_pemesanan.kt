@@ -6,27 +6,35 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.example.ugd3_c_10898.room.mobil.SewaMobil
+import com.example.ugd3_c_10898.room.mobil.SewaMobilDao
+import com.example.ugd3_c_10898.room.user.UserDB
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [rv_show_pemesanan.newInstance] factory method to
- * create an instance of this fragment.
- */
 class rv_show_pemesanan : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+    lateinit var rvPemesanan: RecyclerView
+     var pemesananAdapter: RVPemesanan = RVPemesanan(arrayListOf(), object: RVPemesanan.OnAdapterListener{
+        override fun onUpdate(sewaMobil: SewaMobil) {
+            val fragment = FragmentUpdateSewaMobil()
+            val bundle = Bundle()
+            bundle.putInt("id", sewaMobil.id)
+            fragment.arguments = bundle
+            (activity as HomeActivity).changeFragment(fragment)
+        }
+
+        override fun onDelete(sewaMobil: SewaMobil) {
+            (activity as HomeActivity).changeFragment(FragmentUpdateSewaMobil())
+        }
+    })
+    lateinit var sewaDao: SewaMobilDao
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
+
         }
     }
 
@@ -41,12 +49,37 @@ class rv_show_pemesanan : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        val db by lazy {UserDB(activity as HomeActivity)}
+        sewaDao = db.SewaMobilDao()
+
+        rvPemesanan = view.findViewById(R.id.rvPemesanan)
 
         val btnBack: Button = view.findViewById(R.id.btnBack)
 
 
+        setUpRecycleView()
+        loadData()
         btnBack.setOnClickListener {
             (activity as HomeActivity).changeFragment(ShoppingFragment())
         }
+    }
+
+    fun setUpRecycleView(){
+//        pemesananAdapter = RVPemesanan(arrayListOf(), object: RVPemesanan.OnAdapterListener{
+//            override fun onUpdate(sewaMobil: SewaMobil) {
+//
+//            }
+//
+//            override fun onDelete(sewaMobil: SewaMobil) {
+//
+//            }
+//        })
+        rvPemesanan.apply {
+            layoutManager = LinearLayoutManager(context)
+            adapter = pemesananAdapter
+        }
+    }
+    fun loadData(){
+        pemesananAdapter.setData(sewaDao.getAllData())
     }
 }

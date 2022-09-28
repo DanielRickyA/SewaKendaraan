@@ -1,38 +1,23 @@
 package com.example.ugd3_c_10898
 
+import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.TextView
+import com.example.ugd3_c_10898.room.mobil.SewaMobil
+import com.example.ugd3_c_10898.room.user.UserDB
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [ShoppingFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class ShoppingFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+
+    // Code Room untuk Users
+    val db by lazy { UserDB(this.requireActivity()) }
 
 
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-
-        }
-
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -45,8 +30,20 @@ class ShoppingFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        val inputLokasi : TextView =  view.findViewById(R.id.inputLokasi)
+        val inputTanggalPinjam : TextView = view.findViewById(R.id.inputTanggalPinjam)
+        val inputTanggalKembali : TextView = view.findViewById(R.id.inputTanggalKembali)
+        val inputModelKendaraan : TextView = view.findViewById(R.id.inputModelKendaraan)
         val btn: Button = view.findViewById(R.id.btnTambah)
+        val cek: Button = view.findViewById(R.id.CekPesanan)
         btn.setOnClickListener {
+            if (!inputLokasi.text.isEmpty() && !inputTanggalPinjam.text.isEmpty() && !inputTanggalKembali.text.isEmpty() && !inputModelKendaraan.text.isEmpty())
+                db.SewaMobilDao().addSewaMobil(
+                    SewaMobil(0,inputLokasi.text.toString(), inputTanggalPinjam.text.toString(), inputTanggalKembali.text.toString(), inputModelKendaraan.text.toString())
+                )
+            (activity as HomeActivity).changeFragment(rv_show_pemesanan())
+        }
+        cek.setOnClickListener{
             (activity as HomeActivity).changeFragment(rv_show_pemesanan())
         }
 
