@@ -117,6 +117,7 @@ class FragmentUpdateSewaMobil : Fragment() {
         val channel3 = NotificationChannel(CHANNEL_ID_3, name, NotificationManager.IMPORTANCE_DEFAULT).apply {
             description = descriptionText
         }
+
         val notificationManager = activity?.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         notificationManager.createNotificationChannel(channel1)
         notificationManager.createNotificationChannel(channel2)
@@ -157,7 +158,7 @@ class FragmentUpdateSewaMobil : Fragment() {
         val builder = NotificationCompat.Builder(this.requireContext(), CHANNEL_ID_3)
             .setSmallIcon(R.drawable.ic_message_24)
             .setContentTitle("Jasa Cycle")
-            .setContentText("")
+//            .setContentText()
             .setCategory(NotificationCompat.CATEGORY_MESSAGE)
             .setColor(Color.GREEN)
             .setAutoCancel(true)
