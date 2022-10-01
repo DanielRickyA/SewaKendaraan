@@ -87,7 +87,6 @@ class FragmentUpdateSewaMobil : Fragment() {
             db.SewaMobilDao().updateSewaMobil(SewaMobil(id,lokasiEdit.text.toString(),tanggalPinjamEdit.text.toString(),tanggalKembaliEdit.text.toString(),modelKendaraanEdit.text.toString()))
             sendNotification2();
             sendNotification3();
-//            sendNotification2()
 
             (activity as HomeActivity).changeFragment(rv_show_pemesanan())
         }
@@ -115,9 +114,13 @@ class FragmentUpdateSewaMobil : Fragment() {
             description = descriptionText
         }
 
+        val channel3 = NotificationChannel(CHANNEL_ID_3, name, NotificationManager.IMPORTANCE_DEFAULT).apply {
+            description = descriptionText
+        }
         val notificationManager = activity?.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         notificationManager.createNotificationChannel(channel1)
         notificationManager.createNotificationChannel(channel2)
+        notificationManager.createNotificationChannel(channel3)
     }
 
     private fun sendNotification1(){
@@ -154,7 +157,7 @@ class FragmentUpdateSewaMobil : Fragment() {
         val builder = NotificationCompat.Builder(this.requireContext(), CHANNEL_ID_3)
             .setSmallIcon(R.drawable.ic_message_24)
             .setContentTitle("Jasa Cycle")
-//            .setContentText()
+            .setContentText("")
             .setCategory(NotificationCompat.CATEGORY_MESSAGE)
             .setColor(Color.GREEN)
             .setAutoCancel(true)
