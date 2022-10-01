@@ -10,7 +10,7 @@ import androidx.room.RoomDatabase
     version = 1
 )
 abstract class SewaMobilDB: RoomDatabase() {
-    abstract fun userDao(): SewaMobilDao
+    abstract fun SewaMobilDao(): SewaMobilDao
 
     companion object {
         @Volatile

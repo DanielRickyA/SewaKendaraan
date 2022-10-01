@@ -8,8 +8,8 @@ import java.util.*
 data class SewaMobil (
     @PrimaryKey(autoGenerate = true)
     val id : Int,
-    val tujuan : String,
-    val tglPinjam : String,
-    val tglKembali : String,
-    val modelMobil : String
+    val lokasi : String,
+    val tanggalPinjam : String,
+    val tanggalKembali : String,
+    val modelKendaraan : String
 )

@@ -49,7 +49,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:layout_marginBottom="20dp"
-                    android:hint="Tempat Tujuan" />
+                    android:hint="Tempat Tujuan"
+                    android:inputType="text"/>
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
@@ -60,7 +61,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="20dp"
-                        android:hint="Tanggal Pinjam" />
+                        android:hint="Tanggal Pinjam"
+                        android:inputType="text"/>
                 </com.google.android.material.textfield.TextInputLayout>
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -73,7 +75,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="20dp"
-                    android:hint="Tanggal Kembali" />
+                    android:hint="Tanggal Kembali"
+                    android:inputType="text"/>
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
@@ -83,7 +86,8 @@
                         android:id="@+id/inputModelKendaraan"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="Model Kendaraan" />
+                        android:hint="Model Kendaraan"
+                        android:inputType="text"/>
 
                 </com.google.android.material.textfield.TextInputLayout>
             </com.google.android.material.textfield.TextInputLayout>
