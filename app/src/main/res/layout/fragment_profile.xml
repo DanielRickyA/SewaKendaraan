@@ -41,9 +41,11 @@
             android:id="@+id/EditButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="210dp"
+            android:layout_marginTop="230dp"
             android:text="Edit Profile"
             android:textColor="#434242"
+
+            android:textSize="14sp"
             app:backgroundTint="#97AF9D67"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -53,8 +55,9 @@
             android:id="@+id/linearLayout4"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_marginStart="24dp"
-            android:layout_marginEnd="24dp"
+            android:layout_marginStart="64dp"
+            android:layout_marginTop="32dp"
+            android:layout_marginEnd="64dp"
             android:layout_marginBottom="50dp"
             android:orientation="vertical"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -70,58 +73,61 @@
                 android:layout_height="wrap_content"
                 android:text="Username"
 
-                android:textAlignment="center" />
+                android:textColor="#424040" />
 
             <TextView
                 android:id="@+id/UsernameProfil"
                 style="@style/TextAppearance.MaterialComponents.Headline4"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+
                 android:text="text"
-                android:textAlignment="center"
-                android:textColor="@color/black" />
+                android:textColor="@color/black"
+                android:textSize="20sp" />
 
             <TextView
                 android:id="@+id/txtEmailProfil"
                 style="@style/TextAppearance.MaterialComponents.Headline5"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Email"
-                android:textAlignment="center" />
+                android:text="Email" />
 
             <TextView
                 android:id="@+id/EmailProfil"
                 style="@style/TextAppearance.MaterialComponents.Headline4"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+
                 android:text="text"
-                android:textAlignment="center"
-                android:textColor="@color/black" />
+                android:textColor="@color/black"
+                android:textSize="20sp" />
 
             <TextView
                 android:id="@+id/txtTanggalLahir"
                 style="@style/TextAppearance.MaterialComponents.Headline5"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Tanggal Lahir"
-                android:textAlignment="center" />
+                android:text="Tanggal Lahir" />
 
             <TextView
                 android:id="@+id/TanggalProfil"
                 style="@style/TextAppearance.MaterialComponents.Headline4"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+
                 android:text="text"
-                android:textAlignment="center"
-                android:textColor="@color/black" />
+                android:textColor="@color/black"
+                android:textSize="20sp" />
 
             <TextView
                 android:id="@+id/txtNomorTelepon"
                 style="@style/TextAppearance.MaterialComponents.Headline5"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Nomor Telepon"
-                android:textAlignment="center" />
+                android:text="Nomor Telepon" />
 
             <TextView
                 android:id="@+id/NomorTelepon"
@@ -129,8 +135,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="text"
-                android:textAlignment="center"
-                android:textColor="@color/black" />
+                android:textColor="@color/black"
+                android:textSize="20sp" />
         </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>

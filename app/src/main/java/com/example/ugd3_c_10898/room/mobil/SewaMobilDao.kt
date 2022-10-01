@@ -17,6 +17,6 @@ interface SewaMobilDao {
     @Query("SELECT * FROM sewaMobil WHERE id =:sewaMobil_id")
     fun getDataSewaMobil(sewaMobil_id: Int) : SewaMobil
 
-    @Query("SELECT * FROM SewaMobil WHERE id =:sewaMobil_id")
-    suspend fun getSewaMobil(sewaMobil_id: Int) : List<SewaMobil>
+    @Query("Select * FROM sewamobil")
+    fun getAllData(): List<SewaMobil>
 }
