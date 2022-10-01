@@ -109,7 +109,7 @@ class RegisterActivity : AppCompatActivity() {
 
         val builder = NotificationCompat.Builder(this, CHANNEL_ID_1)
             .setSmallIcon(R.drawable.ic_message_24)
-            .setContentTitle("Jasa Cycle ")
+            .setContentTitle("Jasa Cycle")
             .setContentText("Halo "+ binding?.etUsername?.text.toString() +" Anda Berhasil Melakukan Register")
             .setCategory(NotificationCompat.CATEGORY_MESSAGE)
             .setColor(Color.RED)
