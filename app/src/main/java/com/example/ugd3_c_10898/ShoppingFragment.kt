@@ -30,7 +30,9 @@ class ShoppingFragment : Fragment() {
     private var _binding: FragmentShoppingBinding? = null
     private val binding get() = _binding!!
     private val CHANNEL_ID_1 = "channel_notification_01"
+    private val CHANNEL_ID_2 = "channel_notification_02"
     private val noticationId1 = 101
+    private val noticationId2 = 102
 
 
     override fun onCreateView(
@@ -75,32 +77,57 @@ class ShoppingFragment : Fragment() {
         val channel1 = NotificationChannel(CHANNEL_ID_1, name, NotificationManager.IMPORTANCE_DEFAULT).apply {
             description = descriptionText
         }
+        val channel2 = NotificationChannel(CHANNEL_ID_2, name, NotificationManager.IMPORTANCE_DEFAULT).apply {
+            description = descriptionText
+        }
 
         val notificationManager = activity?.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         notificationManager.createNotificationChannel(channel1)
+        notificationManager.createNotificationChannel(channel2)
     }
 
-    private fun sendNotification(){
-        val intent = Intent(this.requireContext(), ShoppingFragment::class.java).apply {
-            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-        }
+    private fun sendNotification() {
+        val SUMMARY_ID = 0
+        val GROUP_KEY_WORK_EMAIL = "com.android.example.WORK_EMAIL"
 
-        val pendingIntent: PendingIntent = PendingIntent.getActivity(this.requireContext(), 0, intent, 0)
-        val defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
-
-        val builder = NotificationCompat.Builder(this.requireContext(), CHANNEL_ID_1)
-            .setSmallIcon(R.drawable.ic_shopping_cart_24)
-            .setContentTitle("Jasa Cycle")
+        val newMessageNotification1 = NotificationCompat.Builder(this.requireContext(), CHANNEL_ID_1)
+            .setSmallIcon(R.drawable.ic_mail_24)
+            .setContentTitle("Jasa Cycle Fast")
             .setContentText("Selamat Anda Berhasil Melakukan Pemesanan")
-            .setColor(Color.BLUE)
-            .setAutoCancel(true)
-            .setOnlyAlertOnce(true)
-            .setSound(defaultSoundUri)
-            .setContentIntent(pendingIntent)
-            .setPriority(NotificationCompat.PRIORITY_LOW)
+            .setGroup(GROUP_KEY_WORK_EMAIL)
+            .build()
 
-        with(NotificationManagerCompat.from(this.requireContext())){
-            notify(noticationId1, builder.build())
+        val newMessageNotification2 = NotificationCompat.Builder(this.requireContext(), CHANNEL_ID_1)
+            .setSmallIcon(R.drawable.ic_mail_24)
+            .setContentTitle("Deni Sumargo")
+            .setStyle(
+                NotificationCompat.BigTextStyle()
+                    .bigText(
+                        "Untuk Pemesanan ini segera menyertakan identitas lewat nomor 084443766577 ya agar segera diverivikasi"
+                    )
+            )
+            .setGroup(GROUP_KEY_WORK_EMAIL)
+            .build()
+        val summaryNotification = NotificationCompat.Builder(this.requireContext(), CHANNEL_ID_1)
+            .setContentTitle("Pesan Penting")
+            //set content text to support devices running API level < 24
+            .setContentText("Two new messages")
+            .setSmallIcon(R.drawable.ic_mail_24)
+            //build summary info into InboxStyle template
+            .setStyle(NotificationCompat.InboxStyle()
+                .setBigContentTitle("2 new messages")
+                .setSummaryText("JasaFast@gmail.com"))
+            //specify which group this notification belongs to
+            .setGroup(GROUP_KEY_WORK_EMAIL)
+            //set this notification as the summary for the group
+            .setGroupSummary(true)
+            .setColor(Color.RED)
+            .build()
+
+        NotificationManagerCompat.from(this.requireContext()).apply {
+            notify(noticationId1, newMessageNotification1)
+            notify(noticationId2, newMessageNotification2)
+            notify(SUMMARY_ID, summaryNotification)
         }
     }
 }
