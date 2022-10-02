@@ -18,6 +18,18 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <Button
+        android:id="@+id/btnBack"
+        style="@style/Widget.MaterialComponents.Button.TextButton"
+        android:layout_width="66dp"
+        android:layout_height="35dp"
+        android:text="back"
+        android:textColor="#554C3B"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <LinearLayout
         android:id="@+id/linearLayout3"
         android:layout_width="wrap_content"
@@ -42,7 +54,7 @@
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/etUsername"
-                android:layout_width="423dp"
+                android:layout_width="398dp"
                 android:layout_height="wrap_content"
                 android:inputType="text" />
         </com.google.android.material.textfield.TextInputLayout>
@@ -108,6 +120,7 @@
             app:startIconDrawable="@drawable/ic_call_24">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etNumber"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="number" />
@@ -133,4 +146,6 @@
             app:backgroundTint="#97AF9D67" />
 
     </LinearLayout>
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

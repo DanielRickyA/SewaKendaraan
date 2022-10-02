@@ -56,13 +56,30 @@ class ShoppingFragment : Fragment() {
         val btn: Button = view.findViewById(R.id.btnTambah)
         val cek: Button = view.findViewById(R.id.CekPesanan)
         btn.setOnClickListener {
-            if (!inputLokasi.text.isEmpty() && !inputTanggalPinjam.text.isEmpty() && !inputTanggalKembali.text.isEmpty() && !inputModelKendaraan.text.isEmpty())
-                db.SewaMobilDao().addSewaMobil(
-                    SewaMobil(0,inputLokasi.text.toString(), inputTanggalPinjam.text.toString(), inputTanggalKembali.text.toString(), inputModelKendaraan.text.toString())
-                )
-            createNotificationChanel()
-            sendNotification()
-            (activity as HomeActivity).changeFragment(rv_show_pemesanan())
+            if(inputLokasi.text.isEmpty() || inputTanggalPinjam.text.isEmpty() || inputTanggalKembali.text.isEmpty() || inputModelKendaraan.text.isEmpty()){
+                if(inputLokasi.text.isEmpty() ){
+                    inputLokasi.setError("Data Tidak Boleh Kosong")
+                }
+                if (inputTanggalPinjam.text.isEmpty()){
+                    inputTanggalPinjam.setError("Data Tidak Boleh Kosong")
+                }
+                if(inputTanggalKembali.text.isEmpty()){
+                    inputTanggalKembali.setError("Data Tidak Boleh Kosong")
+                }
+                if (inputModelKendaraan.text.isEmpty()){
+                    inputModelKendaraan.setError("Data Tidak Boleh Kosong")
+                }
+            }else{
+                if (!inputLokasi.text.isEmpty() && !inputTanggalPinjam.text.isEmpty() && !inputTanggalKembali.text.isEmpty() && !inputModelKendaraan.text.isEmpty())
+                    db.SewaMobilDao().addSewaMobil(
+                        SewaMobil(0,inputLokasi.text.toString(), inputTanggalPinjam.text.toString(), inputTanggalKembali.text.toString(), inputModelKendaraan.text.toString())
+                    )
+                createNotificationChanel()
+                sendNotification()
+                (activity as HomeActivity).changeFragment(rv_show_pemesanan())
+            }
+
+
         }
         cek.setOnClickListener{
             (activity as HomeActivity).changeFragment(rv_show_pemesanan())

@@ -1,6 +1,7 @@
 package com.example.ugd3_c_10898
 
 import android.content.Context
+import android.content.DialogInterface
 import android.content.SharedPreferences
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -9,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
+import androidx.appcompat.app.AlertDialog
 import com.example.ugd3_c_10898.room.user.UserDB
 import kotlinx.android.synthetic.*
 import org.w3c.dom.Text
@@ -37,6 +39,7 @@ class ProfileFragment : Fragment() {
         val email : TextView = view.findViewById(R.id.EmailProfil)
         val tanggal : TextView = view.findViewById(R.id.TanggalProfil)
         val phone : TextView = view.findViewById(R.id.NomorTelepon)
+        val exit : Button = view.findViewById(R.id.btnExit)
 
         val user = db.userDao().getUser(pref!!.getInt("id",0))
 
@@ -48,6 +51,10 @@ class ProfileFragment : Fragment() {
         val btn: Button = view.findViewById(R.id.EditButton)
         btn.setOnClickListener {
             (activity as HomeActivity).changeFragment(fragment_edit_profil())
+        }
+
+        exit.setOnClickListener{
+            activity?.finish()
         }
     }
 }

@@ -24,6 +24,7 @@ import com.example.ugd3_c_10898.room.mobil.SewaMobil
 //import com.example.ugd3_c_10898.room.User.Use
 import com.example.ugd3_c_10898.room.user.User
 import com.example.ugd3_c_10898.room.user.UserDB
+import kotlinx.android.synthetic.main.fragment_update_sewa_mobil.*
 
 
 class FragmentUpdateSewaMobil : Fragment() {
@@ -84,11 +85,29 @@ class FragmentUpdateSewaMobil : Fragment() {
         createNotificationChanel()
 
         btn.setOnClickListener {
-            db.SewaMobilDao().updateSewaMobil(SewaMobil(id,lokasiEdit.text.toString(),tanggalPinjamEdit.text.toString(),tanggalKembaliEdit.text.toString(),modelKendaraanEdit.text.toString()))
-            sendNotification2();
-            sendNotification3();
+            if(lokasiEdit.text.toString().isEmpty() || tanggalPinjamEdit.text.toString().isEmpty() || tanggalKembaliEdit.text.toString().isEmpty() || modelKendaraanEdit.text.toString().isEmpty()){
+                if (lokasiEdit.text.toString().isEmpty()){
+                    inputLokasi.setError("Data Tidak Boleh Kosong")
+                }
+                if (tanggalPinjamEdit.text.toString().isEmpty()){
+                    inputTanggalPinjam.setError("Data Tidak Boleh Kosong")
+                }
+                if (tanggalKembaliEdit.text.toString().isEmpty()){
+                    inputTanggalKembali.setError("Data Tidak Boleh Kosong")
+                }
+                if (modelKendaraanEdit.text.toString().isEmpty()){
+                    inputModelKendaraan.setError("Data Tidak Boleh Kosong")
+                }
+            }else{
+                if (!lokasiEdit.text.toString().isEmpty() || !tanggalPinjamEdit.text.toString().isEmpty() || !tanggalKembaliEdit.text.toString().isEmpty() || !modelKendaraanEdit.text.toString().isEmpty()){
+                    db.SewaMobilDao().updateSewaMobil(SewaMobil(id,lokasiEdit.text.toString(),tanggalPinjamEdit.text.toString(),tanggalKembaliEdit.text.toString(),modelKendaraanEdit.text.toString()))
+                    sendNotification2();
+                    sendNotification3();
 
-            (activity as HomeActivity).changeFragment(rv_show_pemesanan())
+                    (activity as HomeActivity).changeFragment(rv_show_pemesanan())
+                }
+            }
+
         }
 
         btnBack.setOnClickListener {

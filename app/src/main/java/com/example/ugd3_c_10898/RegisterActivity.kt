@@ -29,8 +29,6 @@ import kotlinx.coroutines.launch
 
 class RegisterActivity : AppCompatActivity() {
     private lateinit var binding : ActivityRegisterBinding
-    private lateinit var username : TextInputEditText
-    private lateinit var password : TextInputEditText
     private val CHANNEL_ID_1 = "channel_notification_01"
     private val noticationId1 = 101
 
@@ -51,7 +49,7 @@ class RegisterActivity : AppCompatActivity() {
 
         db.userDao().addUser(
             User(0,binding.etUsername.text.toString(), binding.etPassword.text.toString(),  binding.etEmail.text.toString(),
-                binding.inputTL.text.toString(), (binding.inputNoTelp.editText?.text.toString()).toInt())
+                binding.inputTL.text.toString(), (binding.etNumber.text.toString()))
         )
 
     }
@@ -64,22 +62,55 @@ class RegisterActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         setTitle("Register Cycle Fast")
-//        var view = inflater.inflater()
-        username = findViewById(R.id.etUsername)
-        password = findViewById(R.id.etPassword)
+
+        binding.btnBack.setOnClickListener{
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
+        }
+
 
         binding.btnActionRegister.setOnClickListener{
-            setupListener()
-//            println(db.userDao().getUsers())
-            val intent = Intent(this, MainActivity::class.java)
-            val mBundle = Bundle()
-            mBundle.putString("username",username.text.toString())
-            mBundle.putString("password",password.text.toString())
-            intent.putExtra("register", mBundle)
-            createNotificationChanel()
-            sendNotification()
+            val bUsername  = binding.etUsername.text.toString()
+            val bPassword = binding.etPassword.text.toString()
+            val bEmail = binding.etEmail.text.toString()
+            val bTanggal = binding.inputTL.text.toString()
+            val bNumber = binding.etNumber.text.toString()
+            var cekRegis =true
+            if(bUsername.isEmpty()){
+                etUsername.setError("Username Tidak Boleh Kosong")
+                cekRegis = false
+            }
+            if(bPassword.isEmpty()){
+                etPassword.setError("Password Tidak Boleh Kosong")
+                cekRegis = false
+            }
+            if(bEmail.isEmpty()){
+                etEmail.setError("Email Tidak Boleh Kosong")
+                cekRegis = false
+            }
+            if(bTanggal.isEmpty()){
+                inputTL.setError("Tanggal Tidak Boleh Kosong")
+                cekRegis = false
+            }
+            if(bNumber.isEmpty()){
+                etNumber.setError("Nomor Telefon Tidak Boleh Kosong")
+                cekRegis = false
+            }
 
-            startActivity(intent)
+            if(cekRegis){
+                setupListener()
+                val intent = Intent(this, MainActivity::class.java)
+                val mBundle = Bundle()
+                mBundle.putString("username",bUsername)
+                mBundle.putString("password",bPassword)
+                intent.putExtra("register", mBundle)
+                createNotificationChanel()
+                sendNotification()
+
+                startActivity(intent)
+            }
+
+
         }
     }
 
@@ -97,9 +128,6 @@ class RegisterActivity : AppCompatActivity() {
     }
 
     private fun sendNotification(){
-        val intent : Intent = Intent(this, MainActivity::class.java).apply {
-            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-        }
 
         val pendingIntent: PendingIntent = PendingIntent.getActivity(this, 0, intent, 0)
         val broadcastIntent : Intent = Intent(this, NotificationReceiver::class.java)

@@ -74,9 +74,9 @@ class MainActivity : AppCompatActivity() {
                 val edit : SharedPreferences.Editor = pref!!.edit()
                 edit.putInt("id",user.id)
                 edit.apply()
-            }else if(intent.getBundleExtra("register")!=null){
-
-                checkLogin=true
+            }else{
+                inputUsername.setError("Username Salah")
+                inputPassword.setError("Password Salah")
             }
 
             if(checkLogin){

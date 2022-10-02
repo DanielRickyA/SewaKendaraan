@@ -50,7 +50,7 @@ class fragment_edit_profil : Fragment() {
         tanggalEdit.setText(user.tglLahir)
         nomorEdit.setText(user.noHp.toString())
         btn.setOnClickListener {
-            db.userDao().updateUser(User(pref!!.getInt("id",0),userEdit.text.toString(),password, emailEdit.text.toString(),tanggalEdit.text.toString(),nomorEdit.text.toString().toInt()))
+            db.userDao().updateUser(User(pref!!.getInt("id",0),userEdit.text.toString(),password, emailEdit.text.toString(),tanggalEdit.text.toString(),nomorEdit.text.toString()))
             (activity as HomeActivity).changeFragment(ProfileFragment())
         }
 
