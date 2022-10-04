@@ -54,21 +54,12 @@ class FragmentUpdateSewaMobil : Fragment() {
         // Inflate the layout for this fragment
 //        return inflater.inflate(R.layout.fragment_update_sewa_mobil, container, false)
         _binding = FragmentUpdateSewaMobilBinding.inflate(inflater, container, false)
-        val view = binding.root
-        return view
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         pref = activity?.getSharedPreferences("prefId", Context.MODE_PRIVATE)
-        val btn: Button = view.findViewById(R.id.btnUpdateSewa)
-        val btnBack: Button = view.findViewById(R.id.btnBack)
-        val btnDelete : Button = view.findViewById(R.id.btnDeleteSewa)
-
-        val lokasiEdit : TextView =  view.findViewById(R.id.inputLokasi)
-        val tanggalPinjamEdit : TextView = view.findViewById(R.id.inputTanggalPinjam)
-        val tanggalKembaliEdit : TextView = view.findViewById(R.id.inputTanggalKembali)
-        val modelKendaraanEdit : TextView = view.findViewById(R.id.inputModelKendaraan)
 
         val id: Int = requireArguments().getInt("id")
 //        arguments.let {
@@ -77,30 +68,34 @@ class FragmentUpdateSewaMobil : Fragment() {
 
         val sewaMobil = db.SewaMobilDao().getDataSewaMobil(id)
 
-        lokasiEdit.setText(sewaMobil.lokasi)
-        tanggalPinjamEdit.setText(sewaMobil.tanggalPinjam)
-        tanggalKembaliEdit.setText(sewaMobil.tanggalKembali)
-        modelKendaraanEdit.setText(sewaMobil.modelKendaraan)
+        binding.inputLokasi.setText(sewaMobil.lokasi)
+        binding.inputTanggalPinjam.setText(sewaMobil.tanggalPinjam)
+        binding.inputTanggalKembali.setText(sewaMobil.tanggalKembali)
+        binding.inputModelKendaraan.setText(sewaMobil.modelKendaraan)
 
         createNotificationChanel()
 
-        btn.setOnClickListener {
-            if(lokasiEdit.text.toString().isEmpty() || tanggalPinjamEdit.text.toString().isEmpty() || tanggalKembaliEdit.text.toString().isEmpty() || modelKendaraanEdit.text.toString().isEmpty()){
-                if (lokasiEdit.text.toString().isEmpty()){
+        binding.btnUpdateSewa.setOnClickListener {
+            if(binding.inputLokasi.text.toString().isEmpty() || binding.inputTanggalPinjam.text.toString().isEmpty() ||
+                inputTanggalKembali.text.toString().isEmpty() || inputModelKendaraan.text.toString().isEmpty()){
+                if (binding.inputLokasi.text.toString().isEmpty()){
                     inputLokasi.setError("Data Tidak Boleh Kosong")
                 }
-                if (tanggalPinjamEdit.text.toString().isEmpty()){
+                if (binding.inputTanggalPinjam.text.toString().isEmpty()){
                     inputTanggalPinjam.setError("Data Tidak Boleh Kosong")
                 }
-                if (tanggalKembaliEdit.text.toString().isEmpty()){
+                if (binding.inputTanggalKembali.text.toString().isEmpty()){
                     inputTanggalKembali.setError("Data Tidak Boleh Kosong")
                 }
-                if (modelKendaraanEdit.text.toString().isEmpty()){
+                if (binding.inputModelKendaraan.text.toString().isEmpty()){
                     inputModelKendaraan.setError("Data Tidak Boleh Kosong")
                 }
             }else{
-                if (!lokasiEdit.text.toString().isEmpty() || !tanggalPinjamEdit.text.toString().isEmpty() || !tanggalKembaliEdit.text.toString().isEmpty() || !modelKendaraanEdit.text.toString().isEmpty()){
-                    db.SewaMobilDao().updateSewaMobil(SewaMobil(id,lokasiEdit.text.toString(),tanggalPinjamEdit.text.toString(),tanggalKembaliEdit.text.toString(),modelKendaraanEdit.text.toString()))
+                if (!binding.inputLokasi.text.toString().isEmpty() || !binding.inputTanggalPinjam.text.toString().isEmpty() ||
+                    !binding.inputTanggalKembali.text.toString().isEmpty() || !binding.inputModelKendaraan.text.toString().isEmpty()){
+
+                    db.SewaMobilDao().updateSewaMobil(SewaMobil(id,binding.inputLokasi.text.toString(),
+                        binding.inputTanggalPinjam.text.toString(),binding.inputTanggalKembali.text.toString(),binding.inputModelKendaraan.text.toString()))
                     sendNotification2();
                     sendNotification3();
 
@@ -110,12 +105,14 @@ class FragmentUpdateSewaMobil : Fragment() {
 
         }
 
-        btnBack.setOnClickListener {
+        binding.btnBack.setOnClickListener {
             (activity as HomeActivity).changeFragment(rv_show_pemesanan())
         }
 
-        btnDelete.setOnClickListener {
-            db.SewaMobilDao().deleteSewaMobil(SewaMobil(id,lokasiEdit.text.toString(),tanggalPinjamEdit.text.toString(),tanggalKembaliEdit.text.toString(),modelKendaraanEdit.text.toString()))
+        binding.btnDeleteSewa.setOnClickListener {
+            db.SewaMobilDao().deleteSewaMobil(SewaMobil(id,binding.inputLokasi.text.toString(),
+                binding.inputTanggalPinjam.text.toString(),binding.inputTanggalKembali.text.toString(), binding.inputModelKendaraan.text.toString()))
+
             sendNotification1()
             (activity as HomeActivity).changeFragment(rv_show_pemesanan())
         }

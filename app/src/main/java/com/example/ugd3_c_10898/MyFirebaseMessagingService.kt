@@ -19,7 +19,6 @@ class MyFirebaseMessagingService : FirebaseMessagingService()    {
             sendNotification(remoteMessage.notification!!.title.toString(), remoteMessage.notification!!.body.toString())
         }
     }
-//
 
     private fun sendNotification(messageTitle: String, messageBody: String){
         val intent = Intent(this, MyFirebaseMessagingService::class.java).apply {

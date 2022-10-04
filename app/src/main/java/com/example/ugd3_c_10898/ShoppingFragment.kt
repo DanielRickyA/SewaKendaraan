@@ -39,40 +39,36 @@ class ShoppingFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-//        return ShoppingFragmentBinding.inflate(R.layout.fragment_shopping, container, false)
+
         _binding = FragmentShoppingBinding.inflate(inflater, container, false)
-        val view = binding.root
-        return view
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        val inputLokasi : TextView =  view.findViewById(R.id.inputLokasi)
-        val inputTanggalPinjam : TextView = view.findViewById(R.id.inputTanggalPinjam)
-        val inputTanggalKembali : TextView = view.findViewById(R.id.inputTanggalKembali)
-        val inputModelKendaraan : TextView = view.findViewById(R.id.inputModelKendaraan)
         val btn: Button = view.findViewById(R.id.btnTambah)
         val cek: Button = view.findViewById(R.id.CekPesanan)
-        btn.setOnClickListener {
-            if(inputLokasi.text.isEmpty() || inputTanggalPinjam.text.isEmpty() || inputTanggalKembali.text.isEmpty() || inputModelKendaraan.text.isEmpty()){
-                if(inputLokasi.text.isEmpty() ){
-                    inputLokasi.setError("Data Tidak Boleh Kosong")
+        binding.btnTambah.setOnClickListener {
+            if(binding.inputLokasi.text.toString().isEmpty() || binding.inputTanggalPinjam.text.toString().isEmpty() || binding.inputTanggalKembali.text.toString().isEmpty() ||
+                binding.inputModelKendaraan.text.toString().isEmpty()){
+                if(binding.inputLokasi.text.toString().isEmpty() ){
+                    binding.inputLokasi.setError("Data Tidak Boleh Kosong")
                 }
-                if (inputTanggalPinjam.text.isEmpty()){
-                    inputTanggalPinjam.setError("Data Tidak Boleh Kosong")
+                if (binding.inputTanggalPinjam.text.toString().isEmpty()){
+                    binding.inputTanggalPinjam.setError("Data Tidak Boleh Kosong")
                 }
-                if(inputTanggalKembali.text.isEmpty()){
-                    inputTanggalKembali.setError("Data Tidak Boleh Kosong")
+                if(binding.inputTanggalKembali.text.toString().isEmpty()){
+                    binding.inputTanggalKembali.setError("Data Tidak Boleh Kosong")
                 }
-                if (inputModelKendaraan.text.isEmpty()){
-                    inputModelKendaraan.setError("Data Tidak Boleh Kosong")
+                if (binding.inputModelKendaraan.text.toString().isEmpty()){
+                    binding.inputModelKendaraan.setError("Data Tidak Boleh Kosong")
                 }
             }else{
-                if (!inputLokasi.text.isEmpty() && !inputTanggalPinjam.text.isEmpty() && !inputTanggalKembali.text.isEmpty() && !inputModelKendaraan.text.isEmpty())
+                if (!binding.inputLokasi.text.toString().isEmpty() && !binding.inputTanggalPinjam.text.toString().isEmpty() && !binding.inputTanggalKembali.text.toString().isEmpty() &&
+                    !binding.inputModelKendaraan.text.toString().isEmpty())
                     db.SewaMobilDao().addSewaMobil(
-                        SewaMobil(0,inputLokasi.text.toString(), inputTanggalPinjam.text.toString(), inputTanggalKembali.text.toString(), inputModelKendaraan.text.toString())
+                        SewaMobil(0,binding.inputLokasi.text.toString(), binding.inputTanggalPinjam.text.toString(),
+                            binding.inputTanggalKembali.text.toString(), binding.inputModelKendaraan.text.toString())
                     )
                 createNotificationChanel()
                 sendNotification()
@@ -81,7 +77,7 @@ class ShoppingFragment : Fragment() {
 
 
         }
-        cek.setOnClickListener{
+        binding.CekPesanan.setOnClickListener{
             (activity as HomeActivity).changeFragment(rv_show_pemesanan())
         }
 
