@@ -6,7 +6,6 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
-import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.media.RingtoneManager
 import android.os.Bundle
@@ -14,20 +13,16 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.TextView
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
-import com.example.ugd3_c_10898.databinding.FragmentShoppingBinding
 import com.example.ugd3_c_10898.databinding.FragmentUpdateSewaMobilBinding
 import com.example.ugd3_c_10898.room.mobil.SewaMobil
 //import com.example.ugd3_c_10898.room.User.Use
-import com.example.ugd3_c_10898.room.user.User
 import com.example.ugd3_c_10898.room.user.UserDB
 import kotlinx.android.synthetic.main.fragment_update_sewa_mobil.*
 
 
-class FragmentUpdateSewaMobil : Fragment() {
+class UpdateSewaMobilFragment : Fragment() {
 
     val db by lazy { UserDB(this.requireActivity()) }
     var pref: SharedPreferences? = null
@@ -99,14 +94,14 @@ class FragmentUpdateSewaMobil : Fragment() {
                     sendNotification2();
                     sendNotification3();
 
-                    (activity as HomeActivity).changeFragment(rv_show_pemesanan())
+                    (activity as HomeActivity).changeFragment(RVShowPemesanan())
                 }
             }
 
         }
 
         binding.btnBack.setOnClickListener {
-            (activity as HomeActivity).changeFragment(rv_show_pemesanan())
+            (activity as HomeActivity).changeFragment(RVShowPemesanan())
         }
 
         binding.btnDeleteSewa.setOnClickListener {
@@ -114,7 +109,7 @@ class FragmentUpdateSewaMobil : Fragment() {
                 binding.inputTanggalPinjam.text.toString(),binding.inputTanggalKembali.text.toString(), binding.inputModelKendaraan.text.toString()))
 
             sendNotification1()
-            (activity as HomeActivity).changeFragment(rv_show_pemesanan())
+            (activity as HomeActivity).changeFragment(RVShowPemesanan())
         }
     }
 
@@ -141,7 +136,7 @@ class FragmentUpdateSewaMobil : Fragment() {
     }
 
     private fun sendNotification1(){
-        val intent = Intent(this.requireContext(), FragmentUpdateSewaMobil::class.java).apply {
+        val intent = Intent(this.requireContext(), UpdateSewaMobilFragment::class.java).apply {
             flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         }
 
@@ -165,7 +160,7 @@ class FragmentUpdateSewaMobil : Fragment() {
     }
 
     private fun sendNotification3(){
-        val intent : Intent = Intent(this.requireContext(), FragmentUpdateSewaMobil::class.java).apply {
+        val intent : Intent = Intent(this.requireContext(), UpdateSewaMobilFragment::class.java).apply {
             flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         }
 
@@ -198,7 +193,7 @@ class FragmentUpdateSewaMobil : Fragment() {
     }
 
     private fun sendNotification2(){
-        val intent : Intent = Intent(this.requireContext(), FragmentUpdateSewaMobil::class.java).apply {
+        val intent : Intent = Intent(this.requireContext(), UpdateSewaMobilFragment::class.java).apply {
             flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         }
 

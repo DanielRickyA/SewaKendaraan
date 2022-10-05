@@ -13,11 +13,11 @@ import com.example.ugd3_c_10898.room.mobil.SewaMobilDao
 import com.example.ugd3_c_10898.room.user.UserDB
 
 
-class rv_show_pemesanan : Fragment() {
+class RVShowPemesanan : Fragment() {
     lateinit var rvPemesanan: RecyclerView
-     var pemesananAdapter: RVPemesanan = RVPemesanan(arrayListOf(), object: RVPemesanan.OnAdapterListener{
+     var pemesananAdapter: RVPemesananAdapter = RVPemesananAdapter(arrayListOf(), object: RVPemesananAdapter.OnAdapterListener{
         override fun onUpdate(sewaMobil: SewaMobil) {
-            val fragment = FragmentUpdateSewaMobil()
+            val fragment = UpdateSewaMobilFragment()
             val bundle = Bundle()
             bundle.putInt("id", sewaMobil.id)
             fragment.arguments = bundle
@@ -25,7 +25,7 @@ class rv_show_pemesanan : Fragment() {
         }
 
         override fun onDelete(sewaMobil: SewaMobil) {
-            (activity as HomeActivity).changeFragment(FragmentUpdateSewaMobil())
+            (activity as HomeActivity).changeFragment(UpdateSewaMobilFragment())
         }
     })
     lateinit var sewaDao: SewaMobilDao

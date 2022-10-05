@@ -1,17 +1,15 @@
 package com.example.ugd3_c_10898
 
 import android.annotation.SuppressLint
-import android.media.Image
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import androidx.viewpager.widget.ViewPager
 import com.example.ugd3_c_10898.room.mobil.SewaMobil
 
-class RVPemesanan (private val data: ArrayList<SewaMobil>, private var listener: OnAdapterListener) : RecyclerView.Adapter<RVPemesanan.viewHolder>() {
+class RVPemesananAdapter (private val data: ArrayList<SewaMobil>, private var listener: OnAdapterListener) : RecyclerView.Adapter<RVPemesananAdapter.viewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): viewHolder {
 
         val itemView = LayoutInflater.from(parent.context).inflate(R.layout.rv_show_pemesanan, parent, false)

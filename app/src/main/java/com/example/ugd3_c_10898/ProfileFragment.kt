@@ -1,7 +1,6 @@
 package com.example.ugd3_c_10898
 
 import android.content.Context
-import android.content.DialogInterface
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
@@ -10,12 +9,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import android.widget.TextView
-import androidx.appcompat.app.AlertDialog
 import com.example.ugd3_c_10898.databinding.FragmentProfileBinding
 import com.example.ugd3_c_10898.room.user.UserDB
-import kotlinx.android.synthetic.*
-import org.w3c.dom.Text
 
 class ProfileFragment : Fragment() {
     val db by lazy { UserDB(this.requireActivity()) }
@@ -56,7 +51,7 @@ class ProfileFragment : Fragment() {
 
         val btn: Button = view.findViewById(R.id.EditButton)
         btn.setOnClickListener {
-            (activity as HomeActivity).changeFragment(fragment_edit_profil())
+            (activity as HomeActivity).changeFragment(EditProfilFragment())
         }
 
         binding.btnExit.setOnClickListener{

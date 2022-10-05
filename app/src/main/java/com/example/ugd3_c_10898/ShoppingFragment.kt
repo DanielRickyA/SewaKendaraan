@@ -2,20 +2,14 @@ package com.example.ugd3_c_10898
 
 import android.app.NotificationChannel
 import android.app.NotificationManager
-import android.app.PendingIntent
 import android.content.Context
-import android.content.Intent
-import android.graphics.BitmapFactory
 import android.graphics.Color
-import android.media.RingtoneManager
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import android.widget.TextView
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import com.example.ugd3_c_10898.room.mobil.SewaMobil
@@ -72,13 +66,13 @@ class ShoppingFragment : Fragment() {
                     )
                 createNotificationChanel()
                 sendNotification()
-                (activity as HomeActivity).changeFragment(rv_show_pemesanan())
+                (activity as HomeActivity).changeFragment(RVShowPemesanan())
             }
 
 
         }
         binding.CekPesanan.setOnClickListener{
-            (activity as HomeActivity).changeFragment(rv_show_pemesanan())
+            (activity as HomeActivity).changeFragment(RVShowPemesanan())
         }
 
     }

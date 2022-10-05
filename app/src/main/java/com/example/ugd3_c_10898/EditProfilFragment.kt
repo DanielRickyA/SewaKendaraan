@@ -14,7 +14,7 @@ import com.example.ugd3_c_10898.room.user.User
 import com.example.ugd3_c_10898.room.user.UserDB
 import com.google.android.material.textfield.TextInputEditText
 
-class fragment_edit_profil : Fragment() {
+class EditProfilFragment : Fragment() {
 
     val db by lazy { UserDB(this.requireActivity()) }
     var pref: SharedPreferences? = null
