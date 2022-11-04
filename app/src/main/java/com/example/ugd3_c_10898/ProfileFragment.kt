@@ -36,11 +36,7 @@ class ProfileFragment : Fragment() {
 
         super.onViewCreated(view, savedInstanceState)
         pref = activity?.getSharedPreferences("prefId", Context.MODE_PRIVATE)
-//        val username :TextView =  view.findViewById(R.id.UsernameProfil)
-//        val email : TextView = view.findViewById(R.id.EmailProfil)
-//        val tanggal : TextView = view.findViewById(R.id.TanggalProfil)
-//        val phone : TextView = view.findViewById(R.id.NomorTelepon)
-//        val exit : Button = view.findViewById(R.id.btnExit)
+
 
         val user = db.userDao().getUser(pref!!.getInt("id",0))
 
@@ -48,6 +44,7 @@ class ProfileFragment : Fragment() {
         binding.EmailProfil.setText(user.email)
         binding.TanggalProfil.setText(user.tglLahir)
         binding.NomorTelepon.setText(user.noHp)
+
 
         val btn: Button = view.findViewById(R.id.EditButton)
         btn.setOnClickListener {
@@ -58,6 +55,10 @@ class ProfileFragment : Fragment() {
             val intent = Intent(activity, MainActivity::class.java)
             startActivity(intent)
             activity?.finish()
+        }
+
+        binding.btnProfil.setOnClickListener{
+            (activity as HomeActivity).changeFragment(CameraFragment())
         }
     }
 }
