@@ -33,6 +33,10 @@ class   HomeActivity : AppCompatActivity() {
                     changeFragment(ShoppingFragment())
                     true
                 }
+                R.id.Location->{
+                    changeFragment(LocationFragment())
+                    true
+                }
                 R.id.mail->{
                     changeFragment(MailFragment())
                     true

@@ -11,6 +11,11 @@
         android:icon="@drawable/ic_shopping_cart_24"
         android:title="Buy"/>
     <item
+        android:id="@+id/Location"
+        android:enabled="true"
+        android:icon="@drawable/ic_baseline_map_24"
+        android:title="Location"/>
+    <item
         android:id="@+id/mail"
         android:enabled="true"
         android:icon="@drawable/ic_mail_24"
