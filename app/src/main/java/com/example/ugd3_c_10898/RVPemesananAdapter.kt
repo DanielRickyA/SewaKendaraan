@@ -7,9 +7,10 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.ugd3_c_10898.models.SewaKendaraan
 import com.example.ugd3_c_10898.room.mobil.SewaMobil
 
-class RVPemesananAdapter (private val data: ArrayList<SewaMobil>, private var listener: OnAdapterListener) : RecyclerView.Adapter<RVPemesananAdapter.viewHolder>() {
+class RVPemesananAdapter (private val data: ArrayList<SewaKendaraan>, private var listener: OnAdapterListener) : RecyclerView.Adapter<RVPemesananAdapter.viewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): viewHolder {
 
         val itemView = LayoutInflater.from(parent.context).inflate(R.layout.rv_show_pemesanan, parent, false)
@@ -43,14 +44,14 @@ class RVPemesananAdapter (private val data: ArrayList<SewaMobil>, private var li
     }
 
     @SuppressLint("NotifyDataSetChange")
-    fun setData(list: List<SewaMobil>){
+    fun setData(list: List<SewaKendaraan>){
         data.clear()
         data.addAll(list)
         notifyDataSetChanged()
     }
 
     interface OnAdapterListener{
-        fun onUpdate(sewaMobil: SewaMobil)
-        fun onDelete(sewaMobil: SewaMobil)
+        fun onUpdate(sewaKendaraan: SewaKendaraan)
+
     }
 }

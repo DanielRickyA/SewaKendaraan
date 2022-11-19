@@ -13,13 +13,24 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
+import com.android.volley.AuthFailureError
+import com.android.volley.RequestQueue
+import com.android.volley.Response
+import com.android.volley.toolbox.StringRequest
+import com.android.volley.toolbox.Volley
+import com.example.ugd3_c_10898.api.TubesApi
 import com.example.ugd3_c_10898.databinding.FragmentUpdateSewaMobilBinding
+import com.example.ugd3_c_10898.models.SewaKendaraan
 import com.example.ugd3_c_10898.room.mobil.SewaMobil
 //import com.example.ugd3_c_10898.room.User.Use
 import com.example.ugd3_c_10898.room.user.UserDB
+import com.google.gson.Gson
 import kotlinx.android.synthetic.main.fragment_update_sewa_mobil.*
+import org.json.JSONObject
+import java.nio.charset.StandardCharsets
 
 
 class UpdateSewaMobilFragment : Fragment() {
@@ -35,6 +46,7 @@ class UpdateSewaMobilFragment : Fragment() {
     private val noticationId1 = 101
     private val noticationId2 = 102
     private val noticationId3 = 103
+    private var queue: RequestQueue? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,19 +66,13 @@ class UpdateSewaMobilFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        queue = Volley.newRequestQueue(requireContext())
         pref = activity?.getSharedPreferences("prefId", Context.MODE_PRIVATE)
 
         val id: Int = requireArguments().getInt("id")
-//        arguments.let {
-//
-//        }
 
-        val sewaMobil = db.SewaMobilDao().getDataSewaMobil(id)
 
-        binding.inputLokasi.setText(sewaMobil.lokasi)
-        binding.inputTanggalPinjam.setText(sewaMobil.tanggalPinjam)
-        binding.inputTanggalKembali.setText(sewaMobil.tanggalKembali)
-        binding.inputModelKendaraan.setText(sewaMobil.modelKendaraan)
+        getById(id)
 
         createNotificationChanel()
 
@@ -88,13 +94,7 @@ class UpdateSewaMobilFragment : Fragment() {
             }else{
                 if (!binding.inputLokasi.text.toString().isEmpty() || !binding.inputTanggalPinjam.text.toString().isEmpty() ||
                     !binding.inputTanggalKembali.text.toString().isEmpty() || !binding.inputModelKendaraan.text.toString().isEmpty()){
-
-                    db.SewaMobilDao().updateSewaMobil(SewaMobil(id,binding.inputLokasi.text.toString(),
-                        binding.inputTanggalPinjam.text.toString(),binding.inputTanggalKembali.text.toString(),binding.inputModelKendaraan.text.toString()))
-                    sendNotification2();
-                    sendNotification3();
-
-                    (activity as HomeActivity).changeFragment(RVShowPemesanan())
+                    UpdateSewaKendaraan(id)
                 }
             }
 
@@ -105,12 +105,130 @@ class UpdateSewaMobilFragment : Fragment() {
         }
 
         binding.btnDeleteSewa.setOnClickListener {
-            db.SewaMobilDao().deleteSewaMobil(SewaMobil(id,binding.inputLokasi.text.toString(),
-                binding.inputTanggalPinjam.text.toString(),binding.inputTanggalKembali.text.toString(), binding.inputModelKendaraan.text.toString()))
+            deleteSewa(id)
 
-            sendNotification1()
-            (activity as HomeActivity).changeFragment(RVShowPemesanan())
+
         }
+    }
+//    Get By Id
+    private fun getById(id: Int){
+    val stringRequest: StringRequest = object :
+        StringRequest(Method.GET, TubesApi.getByIdSewa + id, Response.Listener { response ->
+            val gson = Gson()
+            val jsonObject = JSONObject(response)
+            var sewa = gson.fromJson(jsonObject.getJSONObject("data").toString(), SewaKendaraan::class.java)
+
+            binding.inputLokasi.setText(sewa.lokasi)
+            binding.inputTanggalPinjam.setText(sewa.tanggalPinjam)
+            binding.inputTanggalKembali.setText(sewa.tanggalKembali)
+            binding.inputModelKendaraan.setText(sewa.modelKendaraan)
+        }, Response.ErrorListener { error ->
+            try {
+                val responseBody = String(error.networkResponse.data, StandardCharsets.UTF_8)
+                val errors = JSONObject(responseBody)
+                Toast.makeText(requireActivity(), errors.getString("message"), Toast.LENGTH_SHORT).show()
+            } catch (e: Exception){
+                Toast.makeText(requireActivity(), e.message, Toast.LENGTH_SHORT).show()
+            }
+        }) {
+        @Throws(AuthFailureError::class)
+        override fun getHeaders(): Map<String, String> {
+            val headers = HashMap<String, String>()
+            headers["Accept"] = "application/json"
+            return headers
+        }
+
+    }
+    queue!!.add(stringRequest)
+}
+
+//    Update Sewa Kendaraan
+    private fun UpdateSewaKendaraan(id : Int){
+    val sewa = SewaKendaraan(
+        binding.inputLokasi.text.toString(), binding.inputTanggalPinjam.text.toString(),
+        binding.inputTanggalKembali.text.toString(), binding.inputModelKendaraan.text.toString()
+    )
+
+    val stringRequest : StringRequest = object :
+        StringRequest(Method.PUT, TubesApi.updateSewa + id, Response.Listener { response ->
+            val gson = Gson()
+
+            var sewa = gson.fromJson(response, SewaKendaraan::class.java)
+
+            if(sewa != null)
+                Toast.makeText(requireActivity(), "Data Berhasil diUpdate", Toast.LENGTH_SHORT).show()
+
+            sendNotification2();
+            sendNotification3();
+            (activity as HomeActivity).changeFragment(RVShowPemesanan())
+        }, Response.ErrorListener { error ->
+            try {
+//                val responseBody = String(error.networkResponse.data, StandardCharsets.UTF_8)
+//                val errors = JSONObject(responseBody)
+                Toast.makeText(
+                    requireContext(),
+                    error.toString(),
+                    Toast.LENGTH_SHORT
+                ).show()
+            } catch (e: Exception) {
+                Toast.makeText(requireActivity(), e.message, Toast.LENGTH_SHORT).show()
+            }
+        }){
+        @Throws(AuthFailureError::class)
+        override fun getHeaders(): Map<String, String> {
+            val headers = HashMap<String, String>()
+            headers["Accept"] = "application/json"
+            return headers
+        }
+
+        @Throws(AuthFailureError::class)
+        override fun getBody(): ByteArray {
+            val gson = Gson()
+            val requestBody = gson.toJson(sewa)
+            return requestBody.toByteArray(StandardCharsets.UTF_8)
+        }
+
+        override fun getBodyContentType(): String {
+            return "application/json"
+        }
+    }
+    queue!!.add(stringRequest)
+    }
+
+    private fun deleteSewa(id : Int){
+        val stringRequest: StringRequest = object :
+            StringRequest(Method.DELETE, TubesApi.deleteSewa + id, Response.Listener { response ->
+                val gson = Gson()
+                var sewa = gson.fromJson(response, SewaKendaraan::class.java)
+
+                (activity as HomeActivity).changeFragment(RVShowPemesanan())
+                if(sewa!=null)
+                    Toast.makeText(requireActivity(), "Data Berhasil diHapus", Toast.LENGTH_SHORT).show()
+
+                sendNotification1()
+
+            }, Response.ErrorListener { error ->
+                try {
+//                val responseBody = String(error.networkResponse.data, StandardCharsets.UTF_8)
+//                val errors = JSONObject(responseBody)
+                    Toast.makeText(
+                        requireContext(),
+                        error.toString(),
+                        Toast.LENGTH_SHORT
+                    ).show()
+                } catch (e: Exception) {
+                    Toast.makeText(requireActivity(), e.message, Toast.LENGTH_SHORT).show()
+                }
+            }){
+            @Throws(AuthFailureError::class)
+            override fun getHeaders(): Map<String, String> {
+                val headers = HashMap<String, String>()
+                headers["Accept"] = "application/json"
+                return headers
+            }
+
+        }
+        queue!!.add(stringRequest)
     }
 
     private fun createNotificationChanel(){
