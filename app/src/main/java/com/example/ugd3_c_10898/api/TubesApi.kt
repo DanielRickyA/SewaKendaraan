@@ -2,7 +2,7 @@ package com.example.ugd3_c_10898.api
 
 class TubesApi {
     companion object{
-        val BASE_URL = "https://192.168.18.25/android-apiserver/public/" //Kalo Mo nyoba ganti link nya aja
+        val BASE_URL = "http://127.0.0.1:8000/android-apiserver/public/" //Kalo Mo nyoba ganti link nya aja
 
         val register = BASE_URL + "register"
         var login = BASE_URL + "login"
