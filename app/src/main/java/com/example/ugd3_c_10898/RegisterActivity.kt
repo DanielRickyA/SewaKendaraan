@@ -43,29 +43,12 @@ class RegisterActivity : AppCompatActivity() {
     private val CHANNEL_ID_1 = "channel_notification_01"
     private val noticationId1 = 101
 
+    private var layoutLoading: LinearLayout? = null
     private var queue: RequestQueue? = null
-//     Code Room untuk Users
+    //     Code Room untuk Users
     val db by lazy { UserDB(this) }
     private var userId: Int = 0
 
-    fun setupView(){
-        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
-        val intentType = intent.getIntExtra("intent_type", 0)
-        when (intentType){
-            Constant.TYPE_CREATE -> {
-                btnActionRegister.visibility = View.GONE
-            }
-        }
-    }
-//    private fun setupListener() {
-//
-//        db.userDao().addUser(
-//            User(
-//                0.toString(),binding.etUsername.text.toString(), binding.etPassword.text.toString(),  binding.etEmail.text.toString(),
-//                binding.inputTL.text.toString(), (binding.etNumber.text.toString()))
-//        )
-//
-//    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register)
@@ -113,78 +96,79 @@ class RegisterActivity : AppCompatActivity() {
             }
 
             if(cekRegis) {
-//                setupListener()
-                val intent = Intent(this, MainActivity::class.java)
-//                val mBundle = Bundle()
-//                mBundle.putString("username",bUsername)
-//                mBundle.putString("password",bPassword)
-//                intent.putExtra("register", mBundle)
-                val register = User(
-                    bUsername,
-                    bPassword,
-                    bEmail,
-                    bTanggal,
-                    bNumber,
-                )
+                register()
 
-                val stringRequest: StringRequest =
-                    object : StringRequest(
-                        Method.POST,
-                        TubesApi.register,
-                        Response.Listener { response ->
-                            val gson = Gson()
-                            var register = gson.fromJson(response, User::class.java)
-
-                            if (register != null) {
-                                createNotificationChanel()
-                                sendNotification()
-                            }
-
-                            val returnIntent = Intent()
-                            setResult(RESULT_OK, returnIntent)
-                            finish()
-
-
-                        },
-                        Response.ErrorListener { error ->
-                            try {
-                                val responseBody =
-                                    String(error.networkResponse.data, StandardCharsets.UTF_8)
-                                val errors = JSONObject(responseBody)
-                                Toast.makeText(
-                                    this@RegisterActivity,
-                                    errors.getString("message"),
-                                    Toast.LENGTH_SHORT
-                                ).show()
-                            } catch (e: Exception) {
-                                Toast.makeText(this@RegisterActivity, e.message, Toast.LENGTH_SHORT)
-                                    .show()
-                            }
-                        }) {
-                        @Throws(AuthFailureError::class)
-                        override fun getHeaders(): Map<String, String> {
-                            val headers = HashMap<String, String>()
-                            headers["Accept"] = "application/json"
-                            return headers
-                        }
-
-                        @Throws(AuthFailureError::class)
-                        override fun getBody(): ByteArray {
-                            val gson = Gson()
-                            val requestBody = gson.toJson(register)
-                            return requestBody.toByteArray(StandardCharsets.UTF_8)
-                        }
-
-                        override fun getBodyContentType(): String {
-                            return "application/json"
-                        }
-                    }
-
-                queue!!.add(stringRequest)
-                startActivity(intent)
             }
         }
     }
+
+    private fun register(){
+        val register = User(
+            binding.etUsername.text.toString(),
+            binding.etPassword.text.toString(),
+            binding.etEmail.text.toString(),
+            binding.inputTL.text.toString(),
+            binding.etNumber.text.toString(),
+        )
+
+        val stringRequest: StringRequest =
+            object : StringRequest(
+                Method.POST,
+                TubesApi.register,
+                Response.Listener { response ->
+                    val gson = Gson()
+                    var register = gson.fromJson(response, User::class.java)
+
+                    if (register != null) {
+                        Toast.makeText(this@RegisterActivity, "Data Berhasil diTambahkan", Toast.LENGTH_SHORT).show()
+                    }
+                    createNotificationChanel()
+                    sendNotification()
+                    val intent = Intent(this, MainActivity::class.java)
+                    val mBundle = Bundle()
+                    mBundle.putString("username",binding.etUsername.text.toString())
+                    mBundle.putString("password",binding.etPassword.text.toString())
+                    intent.putExtra("register", mBundle)
+                    startActivity(intent)
+                    finish()
+                },
+                Response.ErrorListener { error ->
+                    try {
+                        val responseBody =
+                            String(error.networkResponse.data, StandardCharsets.UTF_8)
+                        val errors = JSONObject(responseBody)
+                        Toast.makeText(
+                            this@RegisterActivity,
+                            errors.getString("message"),
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    } catch (e: Exception) {
+                        Toast.makeText(this@RegisterActivity, e.message, Toast.LENGTH_SHORT)
+                            .show()
+                    }
+                }) {
+                @Throws(AuthFailureError::class)
+                override fun getHeaders(): Map<String, String> {
+                    val headers = HashMap<String, String>()
+                    headers["Accept"] = "application/json"
+                    return headers
+                }
+
+                @Throws(AuthFailureError::class)
+                override fun getBody(): ByteArray {
+                    val gson = Gson()
+                    val requestBody = gson.toJson(register)
+                    return requestBody.toByteArray(StandardCharsets.UTF_8)
+                }
+
+                override fun getBodyContentType(): String {
+                    return "application/json"
+                }
+            }
+
+        queue!!.add(stringRequest)
+    }
+
 
     private fun createNotificationChanel(){
         val name = "Notification Title"
@@ -230,6 +214,7 @@ class RegisterActivity : AppCompatActivity() {
             notify(noticationId1, builder.build())
         }
     }
+
 
 
 }

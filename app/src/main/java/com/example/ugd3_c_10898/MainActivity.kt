@@ -45,7 +45,6 @@ class MainActivity : AppCompatActivity() {
 
 
 
-//        getBundle()
         pref = getSharedPreferences("prefId", Context.MODE_PRIVATE)
         setTitle("User Login")
         //bindingnya
@@ -53,9 +52,9 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
 //      tampungan dari register untuk main
-//        if(intent.getBundleExtra("register")!=null){
-//            getBundle()
-//        }
+        if(intent.getBundleExtra("register")!=null){
+            getBundle()
+        }
 
 
 //      untuk pindah ke register
@@ -75,6 +74,45 @@ class MainActivity : AppCompatActivity() {
 //      ini buat login
         binding.btnLogin.setOnClickListener(View.OnClickListener {
             var checkLogin=false
+
+            login()
+//            if( user != null ){
+//                checkLogin=true
+//                val edit : SharedPreferences.Editor = pref!!.edit()
+//                edit.putInt("id",user.id)
+//                edit.apply()
+//            }else{
+//                binding.inputUsername.setError("Username Salah")
+//                binding.inputPassword.setError("Password Salah")
+//            }
+
+//            if(checkLogin){
+
+//            }else{
+//                binding.inputUsername.setError("Username Salah")
+//                binding.inputPassword.setError("Password Salah")
+//            }
+
+        })
+//      ini buat splash screen
+        val splashCheck = getSharedPreferences("isSplash", MODE_PRIVATE).getBoolean("splashCheck", true)
+        if(splashCheck == true){
+            startActivity(Intent(this@MainActivity, SplashScreen::class.java))
+            finish()
+        }
+            getSharedPreferences("isSplash", MODE_PRIVATE).edit()
+                .putBoolean("splashCheck", false).commit()
+        }
+//      bundle
+        fun getBundle() {
+            mBundle = intent.getBundleExtra("register")!!
+            vUsername = mBundle.getString("username")!!
+            vPassword = mBundle.getString("password")!!
+
+            binding.inputUsername.editText?.setText(vUsername)
+            binding.inputPassword.editText?.setText(vPassword)
+        }
+        private fun login() {
             val username:String=binding.inputUsername.getEditText()?.getText().toString()
             val password:String=binding.inputPassword.getEditText()?.getText().toString()
 
@@ -83,22 +121,19 @@ class MainActivity : AppCompatActivity() {
                 password
             )
 
-//            val user = db.userDao().getUsersByUsername(username,password)
+        //            val user = db.userDao().getUsersByUsername(username,password)
             val user: StringRequest =
                 object : StringRequest(Method.POST, TubesApi.login, Response.Listener { response ->
                     val gson = Gson()
                     var login = gson.fromJson(response, Login::class.java)
 
                     if (login != null)
-                        Toast.makeText(this@MainActivity, "Register Berhasil", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this@MainActivity, "Login Berhasil", Toast.LENGTH_SHORT).show()
 
-                    val returnIntent = Intent()
-                    setResult(RESULT_OK, returnIntent)
+                    val moveHome=Intent(this@MainActivity,HomeActivity::class.java)
+                    startActivity(moveHome)
                     finish()
-
-                    setLoading(false)
                 }, Response.ErrorListener { error ->
-                    setLoading(false)
                     try {
                         val responseBody = String(error.networkResponse.data, StandardCharsets.UTF_8)
                         val errors = JSONObject(responseBody)
@@ -131,52 +166,5 @@ class MainActivity : AppCompatActivity() {
                 }
 
             queue!!.add(user)
-
-            if( user != null ){
-                checkLogin=true
-//                val edit : SharedPreferences.Editor = pref!!.edit()
-//                edit.putInt("id",user.id)
-//                edit.apply()
-            }else{
-                binding.inputUsername.setError("Username Salah")
-                binding.inputPassword.setError("Password Salah")
-            }
-
-            if(checkLogin){
-                val moveHome=Intent(this@MainActivity,HomeActivity::class.java)
-                startActivity(moveHome)
-                finish()
-            }
-
-        })
-//      ini buat splash screen
-        val splashCheck = getSharedPreferences("isSplash", MODE_PRIVATE).getBoolean("splashCheck", true)
-        if(splashCheck == true){
-            startActivity(Intent(this@MainActivity, SplashScreen::class.java))
-            finish()
-        }
-            getSharedPreferences("isSplash", MODE_PRIVATE).edit()
-                .putBoolean("splashCheck", false).commit()
-        }
-//      bundle
-//        fun getBundle() {
-//            mBundle = intent.getBundleExtra("register")!!
-//            vUsername = mBundle.getString("username")!!
-//            vPassword = mBundle.getString("password")!!
-//
-//            binding.inputUsername.editText?.setText(vUsername)
-//            binding.inputPassword.editText?.setText(vPassword)
-//        }
-        private fun setLoading(isLoading: Boolean) {
-            if (isLoading) {
-                window.setFlags(
-                    WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
-                    WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE
-                )
-                layoutLoading!!.visibility = View.VISIBLE
-            } else {
-                window.clearFlags (WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
-                layoutLoading!!.visibility = View.INVISIBLE
-            }
         }
     }
