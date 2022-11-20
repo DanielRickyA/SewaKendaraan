@@ -39,19 +39,20 @@ class EditProfilFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         pref = activity?.getSharedPreferences("prefId", Context.MODE_PRIVATE)
+        val id = pref!!.getInt("id", -1)
+//        tinggal tambahin getbyId (samaain kayak diprofil)
 
+//        val user = db.userDao().getUser(pref!!.getInt("id",0))
+//        val password = db.userDao().getUser(pref!!.getInt("id",0)).password
 
-        val user = db.userDao().getUser(pref!!.getInt("id",0))
-        val password = db.userDao().getUser(pref!!.getInt("id",0)).password
-
-        binding.userEdit.setText(user.username)
-        binding.emailEdit.setText(user.email)
-        binding.tanggalEdit.setText(user.tglLahir)
-        binding.nomrEdit.setText(user.noHp)
+//        binding.userEdit.setText(user.username)
+//        binding.emailEdit.setText(user.email)
+//        binding.tanggalEdit.setText(user.tglLahir)
+//        binding.nomrEdit.setText(user.noHp)
         //btn Save
         binding.btnSave.setOnClickListener {
-            db.userDao().updateUser(User(pref!!.getInt("id",0),binding.userEdit.text.toString(),password, binding.emailEdit.text.toString(),
-                binding.tanggalEdit.text.toString(),binding.nomrEdit.text.toString()))
+//            db.userDao().updateUser(User(pref!!.getInt("id",0),binding.userEdit.text.toString(),password, binding.emailEdit.text.toString(),
+//                binding.tanggalEdit.text.toString(),binding.nomrEdit.text.toString()))
             (activity as HomeActivity).changeFragment(ProfileFragment())
         }
         //btn Back

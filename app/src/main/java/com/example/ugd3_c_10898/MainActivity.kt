@@ -6,21 +6,19 @@ import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import android.view.WindowManager
-import android.widget.Button
-import android.widget.LinearLayout
 import android.widget.Toast
-import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.view.isEmpty
 import com.android.volley.AuthFailureError
 import com.android.volley.RequestQueue
 import com.android.volley.Response
 import com.android.volley.toolbox.StringRequest
+import com.android.volley.toolbox.Volley
 import com.example.ugd3_c_10898.api.TubesApi
 import com.example.ugd3_c_10898.databinding.ActivityMainBinding
 import com.example.ugd3_c_10898.models.Login
+import com.example.ugd3_c_10898.models.User
 import com.example.ugd3_c_10898.room.user.UserDB
 import com.google.android.material.snackbar.Snackbar
-import com.google.android.material.textfield.TextInputLayout
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.menu_kendaraan.view.*
@@ -31,11 +29,11 @@ class MainActivity : AppCompatActivity() {
     val db by lazy { UserDB(this) }
     private lateinit var binding: ActivityMainBinding
     lateinit var  mBundle: Bundle
+    private lateinit var user: User
     var pref: SharedPreferences? = null
     var vUsername : String = ""
     var vPassword : String = ""
 
-    private var layoutLoading: LinearLayout? = null
     private var queue: RequestQueue? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -43,8 +41,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         getSupportActionBar()?.hide()
 
-
-
+        queue = Volley.newRequestQueue(this)
         pref = getSharedPreferences("prefId", Context.MODE_PRIVATE)
         setTitle("User Login")
         //bindingnya
@@ -72,28 +69,26 @@ class MainActivity : AppCompatActivity() {
         }
 
 //      ini buat login
-        binding.btnLogin.setOnClickListener(View.OnClickListener {
+        binding.btnLogin.setOnClickListener {
             var checkLogin=false
 
-            login()
-//            if( user != null ){
-//                checkLogin=true
-//                val edit : SharedPreferences.Editor = pref!!.edit()
-//                edit.putInt("id",user.id)
-//                edit.apply()
-//            }else{
-//                binding.inputUsername.setError("Username Salah")
-//                binding.inputPassword.setError("Password Salah")
-//            }
 
-//            if(checkLogin){
+            if( !binding.inputUsername.isEmpty() && !binding.inputPassword.isEmpty()){
+                checkLogin=true
 
-//            }else{
-//                binding.inputUsername.setError("Username Salah")
-//                binding.inputPassword.setError("Password Salah")
-//            }
+            }else{
+                binding.inputUsername.setError("Username Salah")
+                binding.inputPassword.setError("Password Salah")
+            }
 
-        })
+            if(checkLogin){
+                login()
+            }else{
+                binding.inputUsername.setError("Username Salah")
+                binding.inputPassword.setError("Password Salah")
+            }
+
+        }
 //      ini buat splash screen
         val splashCheck = getSharedPreferences("isSplash", MODE_PRIVATE).getBoolean("splashCheck", true)
         if(splashCheck == true){
@@ -112,24 +107,27 @@ class MainActivity : AppCompatActivity() {
             binding.inputUsername.editText?.setText(vUsername)
             binding.inputPassword.editText?.setText(vPassword)
         }
+
+//      Fungsi Login
         private fun login() {
             val username:String=binding.inputUsername.getEditText()?.getText().toString()
             val password:String=binding.inputPassword.getEditText()?.getText().toString()
 
-            val login = Login(
+            val sewa = Login(
                 username,
                 password
             )
 
-        //            val user = db.userDao().getUsersByUsername(username,password)
             val user: StringRequest =
                 object : StringRequest(Method.POST, TubesApi.login, Response.Listener { response ->
                     val gson = Gson()
                     var login = gson.fromJson(response, Login::class.java)
-
+                    val jsonObject = JSONObject(response)
                     if (login != null)
                         Toast.makeText(this@MainActivity, "Login Berhasil", Toast.LENGTH_SHORT).show()
-
+                    val edit : SharedPreferences.Editor = pref!!.edit()
+                    edit.putInt("id", jsonObject.getJSONObject("user").getInt("id"))
+                    edit.apply()
                     val moveHome=Intent(this@MainActivity,HomeActivity::class.java)
                     startActivity(moveHome)
                     finish()
@@ -156,7 +154,7 @@ class MainActivity : AppCompatActivity() {
                     @Throws(AuthFailureError::class)
                     override fun getBody(): ByteArray {
                         val gson = Gson()
-                        val requestBody = gson.toJson(login)
+                        val requestBody = gson.toJson(sewa)
                         return requestBody.toByteArray(StandardCharsets.UTF_8)
                     }
 
@@ -164,7 +162,6 @@ class MainActivity : AppCompatActivity() {
                         return "application/json"
                     }
                 }
-
             queue!!.add(user)
         }
     }

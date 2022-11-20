@@ -14,8 +14,10 @@ import com.android.volley.AuthFailureError
 import com.android.volley.RequestQueue
 import com.android.volley.Response
 import com.android.volley.toolbox.StringRequest
+import com.android.volley.toolbox.Volley
 import com.example.ugd3_c_10898.api.TubesApi
 import com.example.ugd3_c_10898.databinding.FragmentProfileBinding
+import com.example.ugd3_c_10898.models.SewaKendaraan
 import com.example.ugd3_c_10898.models.User
 import com.example.ugd3_c_10898.room.user.UserDB
 import com.google.gson.Gson
@@ -48,10 +50,10 @@ class ProfileFragment : Fragment() {
 
         super.onViewCreated(view, savedInstanceState)
         pref = activity?.getSharedPreferences("prefId", Context.MODE_PRIVATE)
-
+        queue = Volley.newRequestQueue(requireActivity())
         //ini bingung bang
-//        val id = pref.getInt("id", -1)
-//        getUserById(id)
+        val id = pref!!.getInt("id", -1)
+        getUserById(id)
 
 //        val user = db.userDao().getUser(pref!!.getInt("id",0))
 //
@@ -77,34 +79,27 @@ class ProfileFragment : Fragment() {
         }
     }
 
-    private fun getUserById(id: Long) {
+    private fun getUserById(id: Int) {
 
 //        setLoading(true)
         val stringRequest: StringRequest = object :
             StringRequest(Method.GET, TubesApi.getUserId + id, Response.Listener { response ->
                 val gson = Gson()
-                val user = gson.fromJson(response, User::class.java)
-
+                val jsonObject = JSONObject(response)
+                var user = gson.fromJson(jsonObject.getJSONObject("data").toString(), User::class.java)
+                println(user.username)
                 binding.UsernameProfil.setText(user.username)
                 binding.EmailProfil.setText(user.email)
                 binding.TanggalProfil.setText(user.tglLahir)
                 binding.NomorTelepon.setText(user.noHp)
-
-//                Toast.makeText(this@ProfileFragment, "Data berhasil diambil!", Toast.LENGTH_SHORT).show()
-//                setLoading(false)
-            }, Response.ErrorListener { error ->
-//                setLoading(false)
-
+                
+            },Response.ErrorListener { error ->
                 try {
                     val responseBody = String(error.networkResponse.data, StandardCharsets.UTF_8)
                     val errors = JSONObject(responseBody)
-//                    Toast.makeText(
-//                        this@ProfileFragment,
-//                        errors.getString("message"),
-//                        Toast.LENGTH_SHORT
-//                    ).show()
-                } catch (e: Exception) {
-//                    Toast.makeText(this@ProfileFragment, e.message, Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireActivity(), errors.getString("message"), Toast.LENGTH_SHORT).show()
+                } catch (e: Exception){
+                    Toast.makeText(requireActivity(), e.message, Toast.LENGTH_SHORT).show()
                 }
             }) {
             @Throws(AuthFailureError::class)
@@ -113,6 +108,7 @@ class ProfileFragment : Fragment() {
                 headers["Accept"] = "application/json"
                 return headers
             }
+
         }
         queue!!.add(stringRequest)
     }
