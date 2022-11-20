@@ -43,7 +43,6 @@ class RegisterActivity : AppCompatActivity() {
     private val CHANNEL_ID_1 = "channel_notification_01"
     private val noticationId1 = 101
 
-    private var layoutLoading: LinearLayout? = null
     private var queue: RequestQueue? = null
 //     Code Room untuk Users
     val db by lazy { UserDB(this) }
@@ -145,10 +144,9 @@ class RegisterActivity : AppCompatActivity() {
                             setResult(RESULT_OK, returnIntent)
                             finish()
 
-                            setLoading(false)
+
                         },
                         Response.ErrorListener { error ->
-                            setLoading(false)
                             try {
                                 val responseBody =
                                     String(error.networkResponse.data, StandardCharsets.UTF_8)
@@ -233,18 +231,5 @@ class RegisterActivity : AppCompatActivity() {
         }
     }
 
-
-    private fun setLoading(isLoading: Boolean) {
-        if (isLoading) {
-            window.setFlags(
-                WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
-                WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE
-            )
-            layoutLoading!!.visibility = View.VISIBLE
-        } else {
-            window.clearFlags (WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
-            layoutLoading!!.visibility = View.INVISIBLE
-        }
-    }
 
 }
