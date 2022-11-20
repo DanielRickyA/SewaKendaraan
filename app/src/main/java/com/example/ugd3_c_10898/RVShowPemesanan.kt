@@ -6,29 +6,38 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.android.volley.AuthFailureError
+import com.android.volley.RequestQueue
+import com.android.volley.Response
+import com.android.volley.toolbox.StringRequest
+import com.android.volley.toolbox.Volley
+import com.example.ugd3_c_10898.api.TubesApi
+
+import com.example.ugd3_c_10898.models.SewaKendaraan
 import com.example.ugd3_c_10898.room.mobil.SewaMobil
 import com.example.ugd3_c_10898.room.mobil.SewaMobilDao
 import com.example.ugd3_c_10898.room.user.UserDB
+import com.google.gson.Gson
+import org.json.JSONObject
+import java.nio.charset.StandardCharsets
 
 
 class RVShowPemesanan : Fragment() {
     lateinit var rvPemesanan: RecyclerView
+    private var queue: RequestQueue? = null
      var pemesananAdapter: RVPemesananAdapter = RVPemesananAdapter(arrayListOf(), object: RVPemesananAdapter.OnAdapterListener{
-        override fun onUpdate(sewaMobil: SewaMobil) {
+        override fun onUpdate(sewaKendaraan: SewaKendaraan) {
             val fragment = UpdateSewaMobilFragment()
             val bundle = Bundle()
-            bundle.putInt("id", sewaMobil.id)
+            bundle.putInt("id", sewaKendaraan.id!!.toInt())
             fragment.arguments = bundle
             (activity as HomeActivity).changeFragment(fragment)
         }
 
-        override fun onDelete(sewaMobil: SewaMobil) {
-            (activity as HomeActivity).changeFragment(UpdateSewaMobilFragment())
-        }
     })
-    lateinit var sewaDao: SewaMobilDao
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -48,9 +57,9 @@ class RVShowPemesanan : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        queue = Volley.newRequestQueue(requireContext())
 
         val db by lazy {UserDB(activity as HomeActivity)}
-        sewaDao = db.SewaMobilDao()
 
         rvPemesanan = view.findViewById(R.id.rvPemesanan)
 
@@ -65,21 +74,39 @@ class RVShowPemesanan : Fragment() {
     }
 
     fun setUpRecycleView(){
-//        pemesananAdapter = RVPemesanan(arrayListOf(), object: RVPemesanan.OnAdapterListener{
-//            override fun onUpdate(sewaMobil: SewaMobil) {
-//
-//            }
-//
-//            override fun onDelete(sewaMobil: SewaMobil) {
-//
-//            }
-//        })
         rvPemesanan.apply {
             layoutManager = LinearLayoutManager(context)
             adapter = pemesananAdapter
         }
     }
     fun loadData(){
-        pemesananAdapter.setData(sewaDao.getAllData())
+        getAllSewaKendaraan()
+    }
+
+    private fun getAllSewaKendaraan(){
+        val stringRequest: StringRequest = object :
+            StringRequest(Method.GET, TubesApi.getAllSewa, Response.Listener { response ->
+                val gson = Gson()
+                val jsonObject = JSONObject(response)
+                var sewa : Array<SewaKendaraan> = gson.fromJson(jsonObject.getJSONArray("data").toString(), Array<SewaKendaraan>::class.java)
+                pemesananAdapter.setData(sewa.toList())
+            }, Response.ErrorListener { error ->
+                try {
+                    val responseBody = String(error.networkResponse.data, StandardCharsets.UTF_8)
+                    val errors = JSONObject(responseBody)
+                    Toast.makeText(requireActivity(), errors.getString("message"), Toast.LENGTH_SHORT).show()
+                } catch (e: Exception){
+                    Toast.makeText(requireActivity(), e.message, Toast.LENGTH_SHORT).show()
+                }
+            }) {
+            @Throws(AuthFailureError::class)
+            override fun getHeaders(): Map<String, String> {
+                val headers = HashMap<String, String>()
+                headers["Accept"] = "application/json"
+                return headers
+            }
+
+        }
+        queue!!.add(stringRequest)
     }
 }

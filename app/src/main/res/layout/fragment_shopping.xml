@@ -33,7 +33,7 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="64dp"
             android:layout_marginEnd="16dp"
-            android:layout_marginBottom="300dp"
+            android:layout_marginBottom="250dp"
             android:orientation="vertical"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -47,28 +47,28 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/inputLokasi"
                     android:layout_width="match_parent"
-                    android:layout_height="50dp"
+                    android:layout_height="wrap_content"
                     android:layout_marginBottom="20dp"
                     android:hint="Tempat Tujuan"
                     android:inputType="text" />
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/inputTanggalPinjam"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="20dp"
-                        android:hint="Tanggal Pinjam"
-                        android:inputType="text" />
-                </com.google.android.material.textfield.TextInputLayout>
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="wrap_content">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/inputTanggalPinjam"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="20dp"
+                    android:hint="Tanggal Pinjam"
+                    android:inputType="text" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/inputTanggalKembali"
@@ -77,19 +77,19 @@
                     android:layout_marginBottom="20dp"
                     android:hint="Tanggal Kembali"
                     android:inputType="text" />
+            </com.google.android.material.textfield.TextInputLayout>
 
-                <com.google.android.material.textfield.TextInputLayout
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/inputModelKendaraan"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="20dp"
+                    android:hint="Model Kendaraan"
+                    android:inputType="text" />
 
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/inputModelKendaraan"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="Model Kendaraan"
-                        android:inputType="text" />
-
-                </com.google.android.material.textfield.TextInputLayout>
             </com.google.android.material.textfield.TextInputLayout>
         </LinearLayout>
 
@@ -97,6 +97,7 @@
             android:id="@+id/btnTambah"
             android:layout_width="273dp"
             android:layout_height="47dp"
+            android:layout_marginBottom="300dp"
             android:text="Tambah"
             android:textColor="@color/black"
             app:backgroundTint="#B5B593"
@@ -104,14 +105,14 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/linearLayout5"
-            app:layout_constraintVertical_bias="0.197" />
+            app:layout_constraintVertical_bias="0.044" />
 
         <Button
             android:id="@+id/CekPesanan"
             style="@style/Widget.MaterialComponents.Button.TextButton"
             android:layout_width="139dp"
             android:layout_height="41dp"
-            android:layout_marginTop="28dp"
+            android:layout_marginTop="8dp"
             android:text="Cek Pesanan"
             android:textColor="#554C3B"
             app:layout_constraintEnd_toEndOf="parent"
