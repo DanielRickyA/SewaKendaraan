@@ -60,6 +60,7 @@ dependencies {
     implementation "androidx.room:room-ktx:$room_version"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines_version"
 
+    //osm
     implementation 'org.osmdroid:osmdroid-android:6.1.11'
 
     //    Volley

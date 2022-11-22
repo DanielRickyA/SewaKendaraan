@@ -7,6 +7,7 @@ class TubesApi {
         val register = BASE_URL + "register"
         val login = BASE_URL + "login"
         val getUserId = BASE_URL + "user/"
+        val updateUser = BASE_URL + "user/"
 
         val getAllSewa = BASE_URL + "SewaKendaraan"
         val getByIdSewa = BASE_URL + "SewaKendaraan/"

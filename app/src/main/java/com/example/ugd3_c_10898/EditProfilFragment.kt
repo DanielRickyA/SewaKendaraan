@@ -1,6 +1,7 @@
 package com.example.ugd3_c_10898
 
 import android.content.Context
+import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -9,10 +10,23 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import com.android.volley.AuthFailureError
+import com.android.volley.RequestQueue
+import com.android.volley.Response
+import com.android.volley.toolbox.StringRequest
+import com.android.volley.toolbox.Volley
+import com.example.ugd3_c_10898.api.TubesApi
 import com.example.ugd3_c_10898.databinding.FragmentEditProfilBinding
+import com.example.ugd3_c_10898.models.EditUser
 import com.example.ugd3_c_10898.room.user.User
 import com.example.ugd3_c_10898.room.user.UserDB
 import com.google.android.material.textfield.TextInputEditText
+import com.google.gson.Gson
+import kotlinx.android.synthetic.main.fragment_edit_profil.*
+import org.json.JSONObject
+import java.nio.charset.StandardCharsets
 
 class EditProfilFragment : Fragment() {
 
@@ -20,6 +34,7 @@ class EditProfilFragment : Fragment() {
     var pref: SharedPreferences? = null
     private var _binding: FragmentEditProfilBinding? = null
     private val binding get() = _binding!!
+    private var queue: RequestQueue? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -39,8 +54,10 @@ class EditProfilFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         pref = activity?.getSharedPreferences("prefId", Context.MODE_PRIVATE)
+        queue = Volley.newRequestQueue(requireActivity())
+
         val id = pref!!.getInt("id", -1)
-//        tinggal tambahin getbyId (samaain kayak diprofil)
+        getUserById(id)
 
 //        val user = db.userDao().getUser(pref!!.getInt("id",0))
 //        val password = db.userDao().getUser(pref!!.getInt("id",0)).password
@@ -51,13 +68,114 @@ class EditProfilFragment : Fragment() {
 //        binding.nomrEdit.setText(user.noHp)
         //btn Save
         binding.btnSave.setOnClickListener {
-//            db.userDao().updateUser(User(pref!!.getInt("id",0),binding.userEdit.text.toString(),password, binding.emailEdit.text.toString(),
-//                binding.tanggalEdit.text.toString(),binding.nomrEdit.text.toString()))
-            (activity as HomeActivity).changeFragment(ProfileFragment())
+            if(binding.userEdit.text.toString().isEmpty() || binding.emailEdit.text.toString().isEmpty() ||
+                binding.tanggalEdit.text.toString().isEmpty() || binding.nomrEdit.text.toString().isEmpty()){
+                if (binding.userEdit.text.toString().isEmpty()){
+                    userEdit.setError("Data Tidak Boleh Kosong")
+                }
+                if (binding.emailEdit.text.toString().isEmpty()){
+                    emailEdit.setError("Data Tidak Boleh Kosong")
+                }
+                if (binding.tanggalEdit.text.toString().isEmpty()){
+                    tanggalEdit.setError("Data Tidak Boleh Kosong")
+                }
+                if (binding.nomrEdit.text.toString().isEmpty()){
+                    nomrEdit.setError("Data Tidak Boleh Kosong")
+                }
+            }else{
+                if (!binding.userEdit.text.toString().isEmpty() || !binding.emailEdit.text.toString().isEmpty() ||
+                    !binding.tanggalEdit.text.toString().isEmpty() || !binding.tanggalEdit.text.toString().isEmpty()){
+                    updateUser(id)
+                }
+            }
         }
         //btn Back
         binding.btnBack.setOnClickListener {
             (activity as HomeActivity).changeFragment(ProfileFragment())
         }
+    }
+
+    private fun getUserById(id: Int) {
+
+        val stringRequest: StringRequest = object :
+            StringRequest(Method.GET, TubesApi.getUserId + id, Response.Listener { response ->
+                val gson = Gson()
+                val jsonObject = JSONObject(response)
+                var user = gson.fromJson(jsonObject.getJSONObject("data").toString(), com.example.ugd3_c_10898.models.User::class.java)
+                println(user.username)
+                binding.userEdit.setText(user.username)
+                binding.emailEdit.setText(user.email)
+                binding.tanggalEdit.setText(user.tglLahir)
+                binding.nomrEdit.setText(user.noHp)
+
+            }, Response.ErrorListener { error ->
+                try {
+                    val responseBody = String(error.networkResponse.data, StandardCharsets.UTF_8)
+                    val errors = JSONObject(responseBody)
+                    Toast.makeText(requireActivity(), errors.getString("message"), Toast.LENGTH_SHORT).show()
+                } catch (e: Exception){
+                    Toast.makeText(requireActivity(), e.message, Toast.LENGTH_SHORT).show()
+                }
+            }) {
+            @Throws(AuthFailureError::class)
+            override fun getHeaders(): Map<String, String> {
+                val headers = HashMap<String, String>()
+                headers["Accept"] = "application/json"
+                return headers
+            }
+
+        }
+        queue!!.add(stringRequest)
+    }
+
+    private fun updateUser(id: Int) {
+
+        val user = EditUser(
+            binding.userEdit.text.toString(), binding.emailEdit.text.toString(),
+            binding.tanggalEdit.text.toString(), binding.nomrEdit.text.toString()
+        )
+
+        val stringRequest: StringRequest = object :
+            StringRequest(Method.PUT, TubesApi.updateUser + id, Response.Listener { response ->
+                val gson = Gson()
+
+                var user = gson.fromJson(response, EditUser::class.java)
+
+                if(user != null)
+                    Toast.makeText(requireActivity(), "Data Berhasil diUpdate", Toast.LENGTH_SHORT).show()
+
+                (activity as HomeActivity).changeFragment(ProfileFragment())
+            }, Response.ErrorListener { error ->
+                try {
+//                val responseBody = String(error.networkResponse.data, StandardCharsets.UTF_8)
+//                val errors = JSONObject(responseBody)
+                    Toast.makeText(
+                        requireContext(),
+                        error.toString(),
+                        Toast.LENGTH_SHORT
+                    ).show()
+                } catch (e: Exception) {
+                    Toast.makeText(requireActivity(), e.message, Toast.LENGTH_SHORT).show()
+                }
+            }){
+            @Throws(AuthFailureError::class)
+            override fun getHeaders(): Map<String, String> {
+                val headers = HashMap<String, String>()
+                headers["Accept"] = "application/json"
+                return headers
+            }
+
+            @Throws(AuthFailureError::class)
+            override fun getBody(): ByteArray {
+                val gson = Gson()
+                val requestBody = gson.toJson(user)
+                return requestBody.toByteArray(StandardCharsets.UTF_8)
+            }
+
+            override fun getBodyContentType(): String {
+                return "application/json"
+            }
+        }
+        queue!!.add(stringRequest)
     }
 }
