@@ -90,15 +90,25 @@
 
     <ImageView
         android:id="@+id/EditBtn"
-        android:layout_width="33dp"
-        android:layout_height="38dp"
+        android:layout_width="27dp"
+        android:layout_height="31dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.92"
+        app:layout_constraintHorizontal_bias="0.833"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.546"
+        app:layout_constraintVertical_bias="0.507"
         app:srcCompat="@drawable/ic_edit_24" />
+
+    <ImageView
+        android:id="@+id/downloadBtn"
+        android:layout_width="29dp"
+        android:layout_height="31dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/EditBtn"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_baseline_download" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

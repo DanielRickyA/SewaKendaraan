@@ -1,30 +1,16 @@
 package com.example.ugd3_c_10898
 
-import android.app.NotificationChannel
-import android.app.NotificationManager
-import android.app.PendingIntent
-import android.content.Context
-import android.content.Intent
-import android.graphics.BitmapFactory
-import android.graphics.Color
-import android.media.RingtoneManager
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import android.widget.TextView
-import androidx.core.app.NotificationCompat
-import androidx.core.app.NotificationManagerCompat
-import com.example.ugd3_c_10898.databinding.FragmentMailBinding
-import com.example.ugd3_c_10898.databinding.FragmentShoppingBinding
-import com.example.ugd3_c_10898.room.mobil.SewaMobil
-import com.google.android.material.textfield.TextInputEditText
+import com.example.ugd3_c_10898.databinding.FragmentScannerBinding
 
-class MailFragment : Fragment() {
+class ScannerFragment : Fragment() {
     // TODO: Rename and change types of parameters
-    private var _binding: FragmentMailBinding? = null
+    private var _binding: FragmentScannerBinding? = null
     private val binding get() = _binding!!
     private val CHANNEL_ID_1 = "channel_notification_01"
     private val noticationId1 = 101
@@ -41,7 +27,7 @@ class MailFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
 //        return inflater.inflate(R.layout.fragment_mail, container, false)
-        _binding = FragmentMailBinding.inflate(inflater, container, false)
+        _binding = FragmentScannerBinding.inflate(inflater, container, false)
         val view = binding.root
         return view
     }
@@ -49,8 +35,8 @@ class MailFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val btn: Button = view.findViewById(R.id.btnMessage)
-        btn.setOnClickListener {
+//        val btn: Button = view.findViewById(R.id.btnMessage)
+//        btn.setOnClickListener {
 //            createNotificationChanel()
 //            sendNotification()
         }
@@ -103,4 +89,4 @@ class MailFragment : Fragment() {
 //            notify(noticationId1, builder.build())
 //        }
 //    }
-}
+//}

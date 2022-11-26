@@ -76,7 +76,6 @@ class ShoppingFragment : Fragment() {
                 if (!binding.inputLokasi.text.toString().isEmpty() && !binding.inputTanggalPinjam.text.toString().isEmpty() && !binding.inputTanggalKembali.text.toString().isEmpty() &&
                     !binding.inputModelKendaraan.text.toString().isEmpty())
                     CreateSewa()
-
             }
 
 

@@ -1,18 +1,14 @@
 package com.example.ugd3_c_10898
 
 import android.content.DialogInterface
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import androidx.appcompat.app.AlertDialog
-import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.google.android.material.navigation.NavigationBarMenu
-import com.google.android.material.navigation.NavigationBarView
 
 class   HomeActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -34,12 +30,12 @@ class   HomeActivity : AppCompatActivity() {
                     changeFragment(ShoppingFragment())
                     true
                 }
-                R.id.Location->{
-                    changeFragment(LocationFragment())
+                R.id.qrCode->{
+                    changeFragment(ScannerFragment())
                     true
                 }
-                R.id.mail->{
-                    changeFragment(MailFragment())
+                R.id.Location->{
+                    changeFragment(LocationFragment())
                     true
                 }
                 R.id.profile->{

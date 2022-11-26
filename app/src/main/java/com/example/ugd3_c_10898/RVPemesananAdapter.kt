@@ -28,6 +28,10 @@ class RVPemesananAdapter (private val data: ArrayList<SewaKendaraan>, private va
             listener.onUpdate(curentItem)
         }
 
+        holder.download.setOnClickListener{
+            listener.onDownload(curentItem)
+        }
+
 
     }
 
@@ -37,6 +41,7 @@ class RVPemesananAdapter (private val data: ArrayList<SewaKendaraan>, private va
         val TanggalPinjam : TextView = itemView.findViewById(R.id.rvTanggalPinjam)
         val TanggalKembali : TextView = itemView.findViewById(R.id.rvTanggalKembali)
         val update : ImageView = itemView.findViewById(R.id.EditBtn)
+        val download : ImageView = itemView.findViewById((R.id.downloadBtn))
     }
 
     override fun getItemCount(): Int {
@@ -52,6 +57,7 @@ class RVPemesananAdapter (private val data: ArrayList<SewaKendaraan>, private va
 
     interface OnAdapterListener{
         fun onUpdate(sewaKendaraan: SewaKendaraan)
+        fun onDownload(sewaKendaraan: SewaKendaraan)
 
     }
 }

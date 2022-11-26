@@ -1,5 +1,6 @@
 package com.example.ugd3_c_10898
 
+//import com.example.ugd3_c_10898.room.user.User
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
@@ -7,13 +8,10 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.BitmapFactory
 import android.graphics.Color
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
-import android.view.WindowManager
-import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import com.android.volley.AuthFailureError
@@ -22,21 +20,15 @@ import com.android.volley.Response
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import com.example.ugd3_c_10898.api.TubesApi
-
 import com.example.ugd3_c_10898.databinding.ActivityRegisterBinding
-
-import com.google.android.material.textfield.TextInputEditText
 import com.example.ugd3_c_10898.models.User
-//import com.example.ugd3_c_10898.room.user.User
 import com.example.ugd3_c_10898.room.user.UserDB
-import com.example.ugd3_c_10898.room.Constant
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.activity_register.*
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import org.json.JSONObject
+import timber.log.Timber
 import java.nio.charset.StandardCharsets
+
 
 class RegisterActivity : AppCompatActivity() {
     private lateinit var binding : ActivityRegisterBinding
@@ -53,7 +45,7 @@ class RegisterActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register)
         getSupportActionBar()?.hide()
-
+        Timber.plant(Timber.DebugTree())
         queue = Volley.newRequestQueue(this)
 
         binding = ActivityRegisterBinding.inflate(layoutInflater)
@@ -76,22 +68,27 @@ class RegisterActivity : AppCompatActivity() {
             var cekRegis = true
             if(bUsername.isEmpty()){
                 etUsername.setError("Username Tidak Boleh Kosong")
+                Timber.tag("Username").d("Username Tidak Boleh Kosong")
                 cekRegis = false
             }
             if(bPassword.isEmpty()){
                 etPassword.setError("Password Tidak Boleh Kosong")
+                Timber.tag("Password").d("Password Tidak Boleh Kosong")
                 cekRegis = false
             }
             if(bEmail.isEmpty()){
                 etEmail.setError("Email Tidak Boleh Kosong")
+                Timber.tag("Email").d("Email Tidak Boleh Kosong")
                 cekRegis = false
             }
             if(bTanggal.isEmpty()){
                 inputTL.setError("Tanggal Tidak Boleh Kosong")
+                Timber.tag("Tanggal Lahir").d("Tanggal Lahir Tidak Boleh Kosong")
                 cekRegis = false
             }
             if(bNumber.isEmpty()){
                 etNumber.setError("Nomor Telefon Tidak Boleh Kosong")
+                Timber.tag("Nomor Telepon").d("Nomor Telepon Tidak Boleh Kosong")
                 cekRegis = false
             }
 
@@ -126,6 +123,7 @@ class RegisterActivity : AppCompatActivity() {
                     sendNotification()
                     val intent = Intent(this, MainActivity::class.java)
                     val mBundle = Bundle()
+                    Timber.d("Berhasil Login")
                     mBundle.putString("username",binding.etUsername.text.toString())
                     mBundle.putString("password",binding.etPassword.text.toString())
                     intent.putExtra("register", mBundle)
