@@ -15,6 +15,7 @@ import android.widget.Button
 import android.widget.Toast
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
+import androidx.core.content.res.ResourcesCompat
 import com.android.volley.AuthFailureError
 import com.android.volley.RequestQueue
 import com.android.volley.Response
@@ -27,6 +28,8 @@ import com.example.ugd3_c_10898.databinding.FragmentShoppingBinding
 import com.example.ugd3_c_10898.models.SewaKendaraan
 import com.google.gson.Gson
 import org.json.JSONObject
+import www.sanju.motiontoast.MotionToast
+import www.sanju.motiontoast.MotionToastStyle
 import java.nio.charset.StandardCharsets
 
 
@@ -98,9 +101,15 @@ class ShoppingFragment : Fragment() {
             val gson = Gson()
             var sewa =  gson.fromJson(response, SewaKendaraan::class.java)
 
-            if(sewa != null)
-                Toast.makeText(requireActivity(), "Data Berhasil diTambahkan", Toast.LENGTH_SHORT).show()
-
+            if(sewa != null) {
+                MotionToast.createToast(requireActivity(),
+                    "Shopping success 😍",
+                    "Data Berhasil diTambahkan!",
+                    MotionToastStyle.SUCCESS,
+                    MotionToast.GRAVITY_BOTTOM,
+                    MotionToast.LONG_DURATION,
+                    ResourcesCompat.getFont(requireActivity(), www.sanju.motiontoast.R.font.helvetica_regular))
+            }
             createNotificationChanel()
             sendNotification()
             (activity as HomeActivity).changeFragment(RVShowPemesanan())
