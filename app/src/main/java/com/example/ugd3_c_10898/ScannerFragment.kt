@@ -57,6 +57,7 @@ class ScannerFragment : Fragment()  {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        Timber.plant(Timber.DebugTree())
         binding.cameraBtn.setOnClickListener {
             if(checkCameraPermissions()){
                 pickImageCamera()

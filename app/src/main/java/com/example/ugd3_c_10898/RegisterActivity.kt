@@ -35,7 +35,6 @@ class RegisterActivity : AppCompatActivity() {
     private val CHANNEL_ID_1 = "channel_notification_01"
     private val noticationId1 = 101
 
-    private var layoutLoading: LinearLayout? = null
     private var queue: RequestQueue? = null
     //     Code Room untuk Users
     val db by lazy { UserDB(this) }
