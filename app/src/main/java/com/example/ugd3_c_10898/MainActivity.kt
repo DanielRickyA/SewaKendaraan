@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
+import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.isEmpty
 import com.android.volley.AuthFailureError
 import com.android.volley.RequestQueue
@@ -20,9 +21,13 @@ import com.example.ugd3_c_10898.models.User
 import com.example.ugd3_c_10898.room.user.UserDB
 import com.google.android.material.snackbar.Snackbar
 import com.google.gson.Gson
+import com.rejowan.cutetoast.CuteToast
+import com.shashank.sony.fancytoastlib.FancyToast
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.menu_kendaraan.view.*
 import org.json.JSONObject
+import www.sanju.motiontoast.MotionToast
+import www.sanju.motiontoast.MotionToastStyle
 import java.nio.charset.StandardCharsets
 
 class MainActivity : AppCompatActivity() {
@@ -83,6 +88,7 @@ class MainActivity : AppCompatActivity() {
 
             if(checkLogin){
                 login()
+
             }else{
                 binding.inputUsername.setError("Username Salah")
                 binding.inputPassword.setError("Password Salah")
@@ -123,8 +129,22 @@ class MainActivity : AppCompatActivity() {
                     val gson = Gson()
                     var login = gson.fromJson(response, Login::class.java)
                     val jsonObject = JSONObject(response)
-                    if (login != null)
-                        Toast.makeText(this@MainActivity, "Login Berhasil", Toast.LENGTH_SHORT).show()
+                    if (login != null){
+//                        FancyToast.makeText(
+//                            this,
+//                            "Login Success!",
+//                            FancyToast.LENGTH_LONG,
+//                            FancyToast.SUCCESS,
+//                            true
+//                        )
+                        CuteToast.ct(
+                            this,
+                            "Login Success!",
+                            CuteToast.LENGTH_LONG,
+                            CuteToast.SUCCESS,
+                            true).show();
+                    }
+//                        Toast.makeText(this@MainActivity, "Login Berhasil", Toast.LENGTH_SHORT).show()
                     val edit : SharedPreferences.Editor = pref!!.edit()
                     edit.putInt("id", jsonObject.getJSONObject("user").getInt("id"))
                     edit.apply()

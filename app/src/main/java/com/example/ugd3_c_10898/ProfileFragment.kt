@@ -1,13 +1,17 @@
 package com.example.ugd3_c_10898
 
+import android.app.Dialog
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
+import android.graphics.Color.TRANSPARENT
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.Window
 import android.widget.Button
 import android.widget.Toast
 import com.android.volley.AuthFailureError
@@ -21,6 +25,8 @@ import com.example.ugd3_c_10898.models.SewaKendaraan
 import com.example.ugd3_c_10898.models.User
 import com.example.ugd3_c_10898.room.user.UserDB
 import com.google.gson.Gson
+import com.itextpdf.kernel.colors.Color
+import com.rejowan.cutetoast.CuteToast
 import org.json.JSONObject
 import java.nio.charset.StandardCharsets
 
@@ -61,6 +67,7 @@ class ProfileFragment : Fragment() {
 //        binding.EmailProfil.setText(user.email)
 //        binding.TanggalProfil.setText(user.tglLahir)
 //        binding.NomorTelepon.setText(user.noHp)
+
 
 
         val btn: Button = view.findViewById(R.id.EditButton)
@@ -112,4 +119,6 @@ class ProfileFragment : Fragment() {
         }
         queue!!.add(stringRequest)
     }
+
+
 }
