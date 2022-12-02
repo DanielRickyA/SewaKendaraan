@@ -22,7 +22,7 @@ import com.example.ugd3_c_10898.room.user.UserDB
 import com.google.android.material.snackbar.Snackbar
 import com.google.gson.Gson
 import com.rejowan.cutetoast.CuteToast
-import com.shashank.sony.fancytoastlib.FancyToast
+//import com.shashank.sony.fancytoastlib.FancyToast
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.menu_kendaraan.view.*
 import org.json.JSONObject
@@ -75,24 +75,10 @@ class MainActivity : AppCompatActivity() {
 
 //      ini buat login
         binding.btnLogin.setOnClickListener {
-            var checkLogin=false
 
 
-            if( !binding.inputUsername.isEmpty() && !binding.inputPassword.isEmpty()){
-                checkLogin=true
+        login()
 
-            }else{
-                binding.inputUsername.setError("Username Salah")
-                binding.inputPassword.setError("Password Salah")
-            }
-
-            if(checkLogin){
-                login()
-
-            }else{
-                binding.inputUsername.setError("Username Salah")
-                binding.inputPassword.setError("Password Salah")
-            }
 
         }
 //      ini buat splash screen

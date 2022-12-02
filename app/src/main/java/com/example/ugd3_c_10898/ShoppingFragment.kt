@@ -61,25 +61,8 @@ class ShoppingFragment : Fragment() {
         val btn: Button = view.findViewById(R.id.btnTambah)
         val cek: Button = view.findViewById(R.id.CekPesanan)
         btn.setOnClickListener {
-            if(binding.inputLokasi.text.toString().isEmpty() || binding.inputTanggalPinjam.text.toString().isEmpty() || binding.inputTanggalKembali.text.toString().isEmpty() ||
-                binding.inputModelKendaraan.text.toString().isEmpty()){
-                if(binding.inputLokasi.text.toString().isEmpty() ){
-                    binding.inputLokasi.setError("Data Tidak Boleh Kosong")
-                }
-                if (binding.inputTanggalPinjam.text.toString().isEmpty()){
-                    binding.inputTanggalPinjam.setError("Data Tidak Boleh Kosong")
-                }
-                if(binding.inputTanggalKembali.text.toString().isEmpty()){
-                    binding.inputTanggalKembali.setError("Data Tidak Boleh Kosong")
-                }
-                if (binding.inputModelKendaraan.text.toString().isEmpty()){
-                    binding.inputModelKendaraan.setError("Data Tidak Boleh Kosong")
-                }
-            }else{
-                if (!binding.inputLokasi.text.toString().isEmpty() && !binding.inputTanggalPinjam.text.toString().isEmpty() && !binding.inputTanggalKembali.text.toString().isEmpty() &&
-                    !binding.inputModelKendaraan.text.toString().isEmpty())
-                    CreateSewa()
-            }
+
+        CreateSewa()
 
 
         }
@@ -98,18 +81,8 @@ class ShoppingFragment : Fragment() {
 
     val stringRequest: StringRequest =
         object : StringRequest(Method.POST, TubesApi.createSewa, Response.Listener { response ->
-            val gson = Gson()
-            var sewa =  gson.fromJson(response, SewaKendaraan::class.java)
 
-            if(sewa != null) {
-                MotionToast.createToast(requireActivity(),
-                    "Shopping success 😍",
-                    "Data Berhasil diTambahkan!",
-                    MotionToastStyle.SUCCESS,
-                    MotionToast.GRAVITY_BOTTOM,
-                    MotionToast.LONG_DURATION,
-                    ResourcesCompat.getFont(requireActivity(), www.sanju.motiontoast.R.font.helvetica_regular))
-            }
+                Toast.makeText(context, JSONObject(response).getString("message"), Toast.LENGTH_SHORT).show()
             createNotificationChanel()
             sendNotification()
             (activity as HomeActivity).changeFragment(RVShowPemesanan())

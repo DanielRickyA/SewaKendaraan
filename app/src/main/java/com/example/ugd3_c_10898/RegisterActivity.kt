@@ -59,42 +59,7 @@ class RegisterActivity : AppCompatActivity() {
 
 
         binding.btnActionRegister.setOnClickListener{
-            var bUsername  = binding.etUsername.text.toString()
-            val bPassword = binding.etPassword.text.toString()
-            val bEmail = binding.etEmail.text.toString()
-            val bTanggal = binding.inputTL.text.toString()
-            val bNumber = binding.etNumber.text.toString()
-            var cekRegis = true
-            if(bUsername.isEmpty()){
-                etUsername.setError("Username Tidak Boleh Kosong")
-                Timber.tag("Username").d("Username Tidak Boleh Kosong")
-                cekRegis = false
-            }
-            if(bPassword.isEmpty()){
-                etPassword.setError("Password Tidak Boleh Kosong")
-                Timber.tag("Password").d("Password Tidak Boleh Kosong")
-                cekRegis = false
-            }
-            if(bEmail.isEmpty()){
-                etEmail.setError("Email Tidak Boleh Kosong")
-                Timber.tag("Email").d("Email Tidak Boleh Kosong")
-                cekRegis = false
-            }
-            if(bTanggal.isEmpty()){
-                inputTL.setError("Tanggal Tidak Boleh Kosong")
-                Timber.tag("Tanggal Lahir").d("Tanggal Lahir Tidak Boleh Kosong")
-                cekRegis = false
-            }
-            if(bNumber.isEmpty()){
-                etNumber.setError("Nomor Telefon Tidak Boleh Kosong")
-                Timber.tag("Nomor Telepon").d("Nomor Telepon Tidak Boleh Kosong")
-                cekRegis = false
-            }
-
-            if(cekRegis) {
-                register()
-
-            }
+            register()
         }
     }
 
@@ -112,12 +77,9 @@ class RegisterActivity : AppCompatActivity() {
                 Method.POST,
                 TubesApi.register,
                 Response.Listener { response ->
-                    val gson = Gson()
-                    var register = gson.fromJson(response, User::class.java)
 
-                    if (register != null) {
-                        Toast.makeText(this@RegisterActivity, "Data Berhasil diTambahkan", Toast.LENGTH_SHORT).show()
-                    }
+                    Toast.makeText(this@RegisterActivity, JSONObject(response).getString("message"), Toast.LENGTH_SHORT).show()
+
                     createNotificationChanel()
                     sendNotification()
                     val intent = Intent(this, MainActivity::class.java)
