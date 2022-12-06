@@ -21,8 +21,11 @@ import com.android.volley.toolbox.Volley
 import com.example.ugd3_c_10898.HomeActivity
 import com.example.ugd3_c_10898.R
 import com.example.ugd3_c_10898.api.TubesApi
+import com.example.ugd3_c_10898.databinding.FragmentSewaMobilBinding
+
+
 import com.example.ugd3_c_10898.room.user.UserDB
-import com.example.ugd3_c_10898.databinding.FragmentShoppingBinding
+
 import com.example.ugd3_c_10898.models.SewaMobil
 import com.google.gson.Gson
 import org.json.JSONObject
@@ -33,7 +36,7 @@ class SewaMobilFragment : Fragment() {
 
     // Code Room untuk Users
     val db by lazy { UserDB(this.requireActivity()) }
-    private var _binding: FragmentShoppingBinding? = null
+    private var _binding: FragmentSewaMobilBinding? = null
     private val binding get() = _binding!!
     private val CHANNEL_ID_1 = "channel_notification_01"
     private val CHANNEL_ID_2 = "channel_notification_02"
@@ -47,7 +50,7 @@ class SewaMobilFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
-        _binding = FragmentShoppingBinding.inflate(inflater, container, false)
+        _binding = FragmentSewaMobilBinding.inflate(inflater, container, false)
         return binding.root
     }
 
