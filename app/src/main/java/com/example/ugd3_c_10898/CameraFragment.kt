@@ -8,10 +8,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.FrameLayout
-import android.widget.ImageButton
 import com.example.ugd3_c_10898.databinding.FragmentCameraBinding
-import com.example.ugd3_c_10898.databinding.FragmentProfileBinding
+import com.example.ugd3_c_10898.Profil.ProfileFragment
 import java.lang.Exception
 
 class CameraFragment : Fragment() {

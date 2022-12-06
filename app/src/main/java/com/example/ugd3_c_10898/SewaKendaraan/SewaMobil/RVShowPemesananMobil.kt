@@ -1,4 +1,4 @@
-package com.example.ugd3_c_10898
+package com.example.ugd3_c_10898.SewaKendaraan.SewaMobil
 
 import android.annotation.SuppressLint
 import android.graphics.Bitmap
@@ -12,7 +12,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.Toast
-import androidx.appcompat.content.res.AppCompatResources.getDrawable
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.android.volley.AuthFailureError
@@ -20,11 +19,11 @@ import com.android.volley.RequestQueue
 import com.android.volley.Response
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
+import com.example.ugd3_c_10898.HomeActivity
+import com.example.ugd3_c_10898.R
 import com.example.ugd3_c_10898.api.TubesApi
 
-import com.example.ugd3_c_10898.models.SewaKendaraan
-import com.example.ugd3_c_10898.room.mobil.SewaMobil
-import com.example.ugd3_c_10898.room.mobil.SewaMobilDao
+import com.example.ugd3_c_10898.models.SewaMobil
 import com.example.ugd3_c_10898.room.user.UserDB
 import com.google.gson.Gson
 import com.itextpdf.barcodes.BarcodeQRCode
@@ -51,11 +50,11 @@ import java.time.LocalTime
 import java.time.format.DateTimeFormatter
 
 
-class RVShowPemesanan : Fragment() {
+class RVShowPemesananMobil : Fragment() {
     lateinit var rvPemesanan: RecyclerView
     private var queue: RequestQueue? = null
-     var pemesananAdapter: RVPemesananAdapter = RVPemesananAdapter(arrayListOf(), object: RVPemesananAdapter.OnAdapterListener{
-        override fun onUpdate(sewaKendaraan: SewaKendaraan) {
+     var pemesananAdapter: RVPemesananMobilAdapter = RVPemesananMobilAdapter(arrayListOf(), object: RVPemesananMobilAdapter.OnAdapterListener {
+        override fun onUpdate(sewaKendaraan: SewaMobil) {
             val fragment = UpdateSewaMobilFragment()
             val bundle = Bundle()
             bundle.putInt("id", sewaKendaraan.id!!.toInt())
@@ -63,7 +62,7 @@ class RVShowPemesanan : Fragment() {
             (activity as HomeActivity).changeFragment(fragment)
         }
 
-         override fun onDownload(sewaKendaraan: SewaKendaraan) {
+         override fun onDownload(sewaKendaraan: SewaMobil) {
              try{
                  if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
                      if (sewaKendaraan.lokasi.isEmpty() && sewaKendaraan.tanggalPinjam.isEmpty() && sewaKendaraan.tanggalKembali.isEmpty() && sewaKendaraan.modelKendaraan.isEmpty()){
@@ -109,7 +108,7 @@ class RVShowPemesanan : Fragment() {
         setUpRecycleView()
         loadData()
         btnBack.setOnClickListener {
-            (activity as HomeActivity).changeFragment(ShoppingFragment())
+            (activity as HomeActivity).changeFragment(SewaMobilFragment())
         }
     }
 
@@ -128,7 +127,7 @@ class RVShowPemesanan : Fragment() {
             StringRequest(Method.GET, TubesApi.getAllSewa, Response.Listener { response ->
                 val gson = Gson()
                 val jsonObject = JSONObject(response)
-                var sewa : Array<SewaKendaraan> = gson.fromJson(jsonObject.getJSONArray("data").toString(), Array<SewaKendaraan>::class.java)
+                var sewa : Array<SewaMobil> = gson.fromJson(jsonObject.getJSONArray("data").toString(), Array<SewaMobil>::class.java)
                 pemesananAdapter.setData(sewa.toList())
             }, Response.ErrorListener { error ->
                 try {
@@ -151,7 +150,7 @@ class RVShowPemesanan : Fragment() {
     }
 
     @SuppressLint("UseCompatLoadingForDrawables")
-    private fun createPdf(sewaKendaraan: SewaKendaraan){
+    private fun createPdf(sewaMobil: SewaMobil){
         val pdfpath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).toString()
         val file = File(pdfpath, "Nota_Sewa.pdf")
         FileOutputStream(file)
@@ -179,13 +178,13 @@ class RVShowPemesanan : Fragment() {
         val table = Table(width)
         table.setHorizontalAlignment(HorizontalAlignment.CENTER)
         table.addCell(Cell().add(Paragraph("Nama Lokasi")))
-        table.addCell(Cell().add(Paragraph(sewaKendaraan.lokasi)))
+        table.addCell(Cell().add(Paragraph(sewaMobil.lokasi)))
         table.addCell(Cell().add(Paragraph("Tanggal Pinjam")))
-        table.addCell(Cell().add(Paragraph(sewaKendaraan.tanggalPinjam)))
+        table.addCell(Cell().add(Paragraph(sewaMobil.tanggalPinjam)))
         table.addCell(Cell().add(Paragraph("Tanggal Kembali")))
-        table.addCell(Cell().add(Paragraph(sewaKendaraan.tanggalKembali)))
+        table.addCell(Cell().add(Paragraph(sewaMobil.tanggalKembali)))
         table.addCell(Cell().add(Paragraph("Model Kendaraan")))
-        table.addCell(Cell().add(Paragraph(sewaKendaraan.modelKendaraan)))
+        table.addCell(Cell().add(Paragraph(sewaMobil.modelKendaraan)))
         val dateTimeFormatter = DateTimeFormatter.ofPattern("dd/MM/yyy")
         table.addCell(Cell().add(Paragraph("Tanggal Nota dibuat")))
         table.addCell(Cell().add(Paragraph(LocalDate.now().format(dateTimeFormatter))))
@@ -194,13 +193,13 @@ class RVShowPemesanan : Fragment() {
         table.addCell(Cell().add(Paragraph(LocalTime.now().format(timeFormatter))))
 
         val barcodeQRCode = BarcodeQRCode(
-            """"
-                                            ${sewaKendaraan.lokasi}
-                                            ${sewaKendaraan.tanggalPinjam}
-                                            ${sewaKendaraan.tanggalKembali}
-                                            ${sewaKendaraan.modelKendaraan}
-                                            ${LocalDate.now().format(dateTimeFormatter)}
-                                            ${LocalTime.now().format(timeFormatter)}
+            """
+                            ${"Lokasi: "+sewaMobil.lokasi}
+                            ${"Tanggal Pinjam: "+sewaMobil.tanggalPinjam}
+                            ${"Tangal Kembali: "+sewaMobil.tanggalKembali}
+                            ${"Model Mobil: "+sewaMobil.modelKendaraan}
+                            ${LocalDate.now().format(dateTimeFormatter)}
+                            ${LocalTime.now().format(timeFormatter)}
                                             """.trimMargin())
         val qrCodeObject = barcodeQRCode.createFormXObject(ColorConstants.BLACK, pdfDocument)
         val qrCodeImage = Image(qrCodeObject).setWidth(80f).setHorizontalAlignment(HorizontalAlignment.CENTER)

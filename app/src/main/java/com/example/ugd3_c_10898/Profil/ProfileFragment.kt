@@ -1,17 +1,13 @@
-package com.example.ugd3_c_10898
+package com.example.ugd3_c_10898.Profil
 
-import android.app.Dialog
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
-import android.graphics.Color.TRANSPARENT
-import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.Window
 import android.widget.Button
 import android.widget.Toast
 import com.android.volley.AuthFailureError
@@ -19,14 +15,12 @@ import com.android.volley.RequestQueue
 import com.android.volley.Response
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
+import com.example.ugd3_c_10898.*
 import com.example.ugd3_c_10898.api.TubesApi
 import com.example.ugd3_c_10898.databinding.FragmentProfileBinding
-import com.example.ugd3_c_10898.models.SewaKendaraan
 import com.example.ugd3_c_10898.models.User
 import com.example.ugd3_c_10898.room.user.UserDB
 import com.google.gson.Gson
-import com.itextpdf.kernel.colors.Color
-import com.rejowan.cutetoast.CuteToast
 import org.json.JSONObject
 import java.nio.charset.StandardCharsets
 
@@ -95,6 +89,9 @@ class ProfileFragment : Fragment() {
                 val jsonObject = JSONObject(response)
                 var user = gson.fromJson(jsonObject.getJSONObject("data").toString(), User::class.java)
                 println(user.username)
+                println(user.tglLahir)
+                println(user.noHp)
+
                 binding.UsernameProfil.setText(user.username)
                 binding.EmailProfil.setText(user.email)
                 binding.TanggalProfil.setText(user.tglLahir)

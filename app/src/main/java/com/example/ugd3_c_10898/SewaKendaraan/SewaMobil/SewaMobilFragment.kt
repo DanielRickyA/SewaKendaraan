@@ -1,10 +1,8 @@
-package com.example.ugd3_c_10898
+package com.example.ugd3_c_10898.SewaKendaraan.SewaMobil
 
-import android.app.Activity.RESULT_OK
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Context
-import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -15,25 +13,23 @@ import android.widget.Button
 import android.widget.Toast
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
-import androidx.core.content.res.ResourcesCompat
 import com.android.volley.AuthFailureError
 import com.android.volley.RequestQueue
 import com.android.volley.Response
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
+import com.example.ugd3_c_10898.HomeActivity
+import com.example.ugd3_c_10898.R
 import com.example.ugd3_c_10898.api.TubesApi
-import com.example.ugd3_c_10898.room.mobil.SewaMobil
 import com.example.ugd3_c_10898.room.user.UserDB
 import com.example.ugd3_c_10898.databinding.FragmentShoppingBinding
-import com.example.ugd3_c_10898.models.SewaKendaraan
+import com.example.ugd3_c_10898.models.SewaMobil
 import com.google.gson.Gson
 import org.json.JSONObject
-import www.sanju.motiontoast.MotionToast
-import www.sanju.motiontoast.MotionToastStyle
 import java.nio.charset.StandardCharsets
 
 
-class ShoppingFragment : Fragment() {
+class SewaMobilFragment : Fragment() {
 
     // Code Room untuk Users
     val db by lazy { UserDB(this.requireActivity()) }
@@ -67,14 +63,14 @@ class ShoppingFragment : Fragment() {
 
         }
         cek.setOnClickListener{
-            (activity as HomeActivity).changeFragment(RVShowPemesanan())
+            (activity as HomeActivity).changeFragment(RVShowPemesananMobil())
         }
 
     }
 
 //  Create Sewa Mobil
     private fun CreateSewa(){
-        val sewa = SewaKendaraan(
+        val sewa = SewaMobil(
             binding.inputLokasi.text.toString(), binding.inputTanggalPinjam.text.toString(),
             binding.inputTanggalKembali.text.toString(), binding.inputModelKendaraan.text.toString()
         )
@@ -85,14 +81,14 @@ class ShoppingFragment : Fragment() {
                 Toast.makeText(context, JSONObject(response).getString("message"), Toast.LENGTH_SHORT).show()
             createNotificationChanel()
             sendNotification()
-            (activity as HomeActivity).changeFragment(RVShowPemesanan())
+            (activity as HomeActivity).changeFragment(RVShowPemesananMobil())
         }, Response.ErrorListener { error ->
             try {
-//                val responseBody = String(error.networkResponse.data, StandardCharsets.UTF_8)
-//                val errors = JSONObject(responseBody)
+                val responseBody = String(error.networkResponse.data, StandardCharsets.UTF_8)
+                val errors = JSONObject(responseBody)
                 Toast.makeText(
                     requireContext(),
-                    error.toString(),
+                    errors.getString("message"),
                     Toast.LENGTH_SHORT
                 ).show()
             } catch (e: Exception) {

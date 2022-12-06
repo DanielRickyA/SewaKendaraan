@@ -8,6 +8,8 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
+import com.example.ugd3_c_10898.Profil.ProfileFragment
+import com.example.ugd3_c_10898.SewaKendaraan.SewaKendaraanFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class   HomeActivity : AppCompatActivity() {
@@ -27,7 +29,7 @@ class   HomeActivity : AppCompatActivity() {
                     true
                 }
                 R.id.shopping->{
-                    changeFragment(ShoppingFragment())
+                    changeFragment(SewaKendaraanFragment())
                     true
                 }
                 R.id.qrCode->{

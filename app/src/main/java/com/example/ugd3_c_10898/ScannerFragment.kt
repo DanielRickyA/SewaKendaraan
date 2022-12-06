@@ -89,33 +89,6 @@ class ScannerFragment : Fragment()  {
 
 
         }
-//    override fun onClick(v: View?) {
-//        when(v?.id){
-//            R.id.cameraBtn -> {
-//                if(checkCameraPermissions()){
-//                    pickImageCamera()
-//                }else{
-//                    requestCameraPermission()
-//                }
-//            }
-//
-//            R.id.galleryBtn -> {
-//                if (checkStoragePermission()){
-//                    pickImageGallery()
-//                }else{
-//                    requestStoragePermission()
-//                }
-//            }
-//
-//            R.id.scanBtn -> {
-//                if(imageUri == null){
-//                    showToast("Pick image first")
-//                }else{
-//                    detectResultFromImage()
-//                }
-//            }
-//        }
-//    }
 
     private fun checkCameraPermissions() :Boolean {
         val resultcamera = (ContextCompat.checkSelfPermission(requireActivity(), android.Manifest.permission.CAMERA)

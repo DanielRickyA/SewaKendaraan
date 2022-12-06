@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".RVShowPemesanan">
+    tools:context=".SewaKendaraan.SewaMobil.RVShowPemesananMobil">
 
     <!-- TODO: Update blank fragment layout -->
 
@@ -24,7 +24,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:listitem="@layout/rv_show_pemesanan" />
+            tools:listitem="@layout/rv_show_pemesanan_mobil" />
 
         <TextView
             android:id="@+id/judulList"

@@ -1,4 +1,4 @@
-package com.example.ugd3_c_10898
+package com.example.ugd3_c_10898.SewaKendaraan.SewaMobil
 
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
@@ -7,13 +7,13 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.example.ugd3_c_10898.models.SewaKendaraan
-import com.example.ugd3_c_10898.room.mobil.SewaMobil
+import com.example.ugd3_c_10898.R
+import com.example.ugd3_c_10898.models.SewaMobil
 
-class RVPemesananAdapter (private val data: ArrayList<SewaKendaraan>, private var listener: OnAdapterListener) : RecyclerView.Adapter<RVPemesananAdapter.viewHolder>() {
+class RVPemesananMobilAdapter (private val data: ArrayList<SewaMobil>, private var listener: OnAdapterListener) : RecyclerView.Adapter<RVPemesananMobilAdapter.viewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): viewHolder {
 
-        val itemView = LayoutInflater.from(parent.context).inflate(R.layout.rv_show_pemesanan, parent, false)
+        val itemView = LayoutInflater.from(parent.context).inflate(R.layout.rv_show_pemesanan_mobil, parent, false)
         return viewHolder(itemView)
     }
 
@@ -49,15 +49,15 @@ class RVPemesananAdapter (private val data: ArrayList<SewaKendaraan>, private va
     }
 
     @SuppressLint("NotifyDataSetChange")
-    fun setData(list: List<SewaKendaraan>){
+    fun setData(list: List<SewaMobil>){
         data.clear()
         data.addAll(list)
         notifyDataSetChanged()
     }
 
     interface OnAdapterListener{
-        fun onUpdate(sewaKendaraan: SewaKendaraan)
-        fun onDownload(sewaKendaraan: SewaKendaraan)
+        fun onUpdate(sewaMobil: SewaMobil)
+        fun onDownload(sewaMobil: SewaMobil)
 
     }
 }

@@ -1,4 +1,4 @@
-package com.example.ugd3_c_10898
+package com.example.ugd3_c_10898.SewaKendaraan.SewaMobil
 
 import android.app.NotificationChannel
 import android.app.NotificationManager
@@ -22,10 +22,12 @@ import com.android.volley.RequestQueue
 import com.android.volley.Response
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
+import com.example.ugd3_c_10898.HomeActivity
+import com.example.ugd3_c_10898.NotificationReceiver
+import com.example.ugd3_c_10898.R
 import com.example.ugd3_c_10898.api.TubesApi
 import com.example.ugd3_c_10898.databinding.FragmentUpdateSewaMobilBinding
-import com.example.ugd3_c_10898.models.SewaKendaraan
-import com.example.ugd3_c_10898.room.mobil.SewaMobil
+import com.example.ugd3_c_10898.models.SewaMobil
 //import com.example.ugd3_c_10898.room.User.Use
 import com.example.ugd3_c_10898.room.user.UserDB
 import com.google.gson.Gson
@@ -80,31 +82,11 @@ class UpdateSewaMobilFragment : Fragment() {
         createNotificationChanel()
 
         binding.btnUpdateSewa.setOnClickListener {
-            if(binding.inputLokasi.text.toString().isEmpty() || binding.inputTanggalPinjam.text.toString().isEmpty() ||
-                inputTanggalKembali.text.toString().isEmpty() || inputModelKendaraan.text.toString().isEmpty()){
-                if (binding.inputLokasi.text.toString().isEmpty()){
-                    inputLokasi.setError("Data Tidak Boleh Kosong")
-                }
-                if (binding.inputTanggalPinjam.text.toString().isEmpty()){
-                    inputTanggalPinjam.setError("Data Tidak Boleh Kosong")
-                }
-                if (binding.inputTanggalKembali.text.toString().isEmpty()){
-                    inputTanggalKembali.setError("Data Tidak Boleh Kosong")
-                }
-                if (binding.inputModelKendaraan.text.toString().isEmpty()){
-                    inputModelKendaraan.setError("Data Tidak Boleh Kosong")
-                }
-            }else{
-                if (!binding.inputLokasi.text.toString().isEmpty() || !binding.inputTanggalPinjam.text.toString().isEmpty() ||
-                    !binding.inputTanggalKembali.text.toString().isEmpty() || !binding.inputModelKendaraan.text.toString().isEmpty()){
-                    UpdateSewaKendaraan(id)
-                }
-            }
-
+            UpdateSewaKendaraan(id)
         }
 
         binding.btnBack.setOnClickListener {
-            (activity as HomeActivity).changeFragment(RVShowPemesanan())
+            (activity as HomeActivity).changeFragment(RVShowPemesananMobil())
         }
 
         binding.btnDeleteSewa.setOnClickListener {
@@ -119,7 +101,7 @@ class UpdateSewaMobilFragment : Fragment() {
         StringRequest(Method.GET, TubesApi.getByIdSewa + id, Response.Listener { response ->
             val gson = Gson()
             val jsonObject = JSONObject(response)
-            var sewa = gson.fromJson(jsonObject.getJSONObject("data").toString(), SewaKendaraan::class.java)
+            var sewa = gson.fromJson(jsonObject.getJSONObject("data").toString(), SewaMobil::class.java)
 
             binding.inputLokasi.setText(sewa.lokasi)
             binding.inputTanggalPinjam.setText(sewa.tanggalPinjam)
@@ -147,38 +129,35 @@ class UpdateSewaMobilFragment : Fragment() {
 
 //    Update Sewa Kendaraan
     private fun UpdateSewaKendaraan(id : Int){
-    val sewa = SewaKendaraan(
+    val sewa = SewaMobil(
         binding.inputLokasi.text.toString(), binding.inputTanggalPinjam.text.toString(),
         binding.inputTanggalKembali.text.toString(), binding.inputModelKendaraan.text.toString()
     )
 
     val stringRequest : StringRequest = object :
         StringRequest(Method.PUT, TubesApi.updateSewa + id, Response.Listener { response ->
-            val gson = Gson()
 
-            var sewa = gson.fromJson(response, SewaKendaraan::class.java)
 
-            if(sewa != null){
+
                 MotionToast.createToast(requireActivity(),
-                                    "Shopping success 😍",
-                                "Data Berhasil diTambahkan!",
-                                        MotionToastStyle.SUCCESS,
-                                        MotionToast.GRAVITY_BOTTOM,
-                                        MotionToast.LONG_DURATION,
-                                        ResourcesCompat.getFont(requireActivity(), www.sanju.motiontoast.R.font.helvetica_regular))
-            }
+                        "Shopping success 😍",
+                            JSONObject(response).getString("message"),
+                            MotionToastStyle.SUCCESS,
+                            MotionToast.GRAVITY_BOTTOM,
+                            MotionToast.LONG_DURATION,
+                            ResourcesCompat.getFont(requireActivity(), www.sanju.motiontoast.R.font.helvetica_regular))
 //                Toast.makeText(requireActivity(), "Data Berhasil diUpdate", Toast.LENGTH_SHORT).show()
 
             sendNotification2();
             sendNotification3();
-            (activity as HomeActivity).changeFragment(RVShowPemesanan())
+            (activity as HomeActivity).changeFragment(RVShowPemesananMobil())
         }, Response.ErrorListener { error ->
             try {
-//                val responseBody = String(error.networkResponse.data, StandardCharsets.UTF_8)
-//                val errors = JSONObject(responseBody)
+                val responseBody = String(error.networkResponse.data, StandardCharsets.UTF_8)
+                val errors = JSONObject(responseBody)
                 Toast.makeText(
-                    requireContext(),
-                    error.toString(),
+                    context,
+                    errors.getString("message"),
                     Toast.LENGTH_SHORT
                 ).show()
             } catch (e: Exception) {
@@ -210,21 +189,21 @@ class UpdateSewaMobilFragment : Fragment() {
         val stringRequest: StringRequest = object :
             StringRequest(Method.DELETE, TubesApi.deleteSewa + id, Response.Listener { response ->
                 val gson = Gson()
-                var sewa = gson.fromJson(response, SewaKendaraan::class.java)
+                var sewa = gson.fromJson(response, SewaMobil::class.java)
 
-                (activity as HomeActivity).changeFragment(RVShowPemesanan())
                 if(sewa!=null)
-                    Toast.makeText(requireActivity(), "Data Berhasil diHapus", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireActivity(), JSONObject(response).getString("message"), Toast.LENGTH_SHORT).show()
 
                 sendNotification1()
+                (activity as HomeActivity).changeFragment(RVShowPemesananMobil())
 
             }, Response.ErrorListener { error ->
                 try {
-//                val responseBody = String(error.networkResponse.data, StandardCharsets.UTF_8)
-//                val errors = JSONObject(responseBody)
+                val responseBody = String(error.networkResponse.data, StandardCharsets.UTF_8)
+                val errors = JSONObject(responseBody)
                     Toast.makeText(
                         requireContext(),
-                        error.toString(),
+                        errors.toString(),
                         Toast.LENGTH_SHORT
                     ).show()
                 } catch (e: Exception) {
