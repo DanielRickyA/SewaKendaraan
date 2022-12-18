@@ -65,7 +65,7 @@ class RVShowPemesananMobil : Fragment() {
          override fun onDownload(sewaKendaraan: SewaMobil) {
              try{
                  if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
-                     if (sewaKendaraan.lokasi.isEmpty() && sewaKendaraan.tanggalPinjam.isEmpty() && sewaKendaraan.tanggalKembali.isEmpty() && sewaKendaraan.modelKendaraan.isEmpty()){
+                     if (sewaKendaraan.lokasi.isEmpty() && sewaKendaraan.tanggalPinjam.isEmpty() && sewaKendaraan.tanggalKembali.isEmpty() && sewaKendaraan.merkMobil.isEmpty()){
                          Toast.makeText(requireActivity(), "Semuanya Tidak boleh kosong" , Toast.LENGTH_SHORT).show()
                      }else{
                          createPdf(sewaKendaraan)
@@ -184,7 +184,7 @@ class RVShowPemesananMobil : Fragment() {
         table.addCell(Cell().add(Paragraph("Tanggal Kembali")))
         table.addCell(Cell().add(Paragraph(sewaMobil.tanggalKembali)))
         table.addCell(Cell().add(Paragraph("Model Kendaraan")))
-        table.addCell(Cell().add(Paragraph(sewaMobil.modelKendaraan)))
+        table.addCell(Cell().add(Paragraph(sewaMobil.merkMobil)))
         val dateTimeFormatter = DateTimeFormatter.ofPattern("dd/MM/yyy")
         table.addCell(Cell().add(Paragraph("Tanggal Nota dibuat")))
         table.addCell(Cell().add(Paragraph(LocalDate.now().format(dateTimeFormatter))))
@@ -197,7 +197,7 @@ class RVShowPemesananMobil : Fragment() {
                             ${"Lokasi: "+sewaMobil.lokasi}
                             ${"Tanggal Pinjam: "+sewaMobil.tanggalPinjam}
                             ${"Tangal Kembali: "+sewaMobil.tanggalKembali}
-                            ${"Model Mobil: "+sewaMobil.modelKendaraan}
+                            ${"Model Mobil: "+sewaMobil.merkMobil}
                             ${LocalDate.now().format(dateTimeFormatter)}
                             ${LocalTime.now().format(timeFormatter)}
                                             """.trimMargin())

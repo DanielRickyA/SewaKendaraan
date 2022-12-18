@@ -16,6 +16,7 @@ import com.android.volley.Response
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import com.example.ugd3_c_10898.*
+import com.example.ugd3_c_10898.KritikSaran.KritikSaranActivity
 import com.example.ugd3_c_10898.api.TubesApi
 import com.example.ugd3_c_10898.databinding.FragmentProfileBinding
 import com.example.ugd3_c_10898.models.User
@@ -77,6 +78,10 @@ class ProfileFragment : Fragment() {
 
         binding.btnProfil.setOnClickListener{
             (activity as HomeActivity).changeFragment(CameraFragment())
+        }
+        binding.fabAdd.setOnClickListener{
+            val intent = Intent(activity, KritikSaranActivity::class.java)
+            startActivity(intent)
         }
     }
 

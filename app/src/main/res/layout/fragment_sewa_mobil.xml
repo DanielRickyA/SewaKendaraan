@@ -16,8 +16,7 @@
             style="@style/TextAppearance.AppCompat.Display1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="40dp"
-            android:layout_marginBottom="1dp"
+            android:layout_marginTop="60dp"
             android:text="Sewa Kendaraan"
             android:textColor="@color/black"
             app:layout_constraintBottom_toTopOf="@+id/linearLayout5"
@@ -29,9 +28,9 @@
         <LinearLayout
             android:id="@+id/linearLayout5"
             android:layout_width="0dp"
-            android:layout_height="0dp"
+            android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="64dp"
+            android:layout_marginTop="32dp"
             android:layout_marginEnd="16dp"
             android:layout_marginBottom="250dp"
             android:orientation="vertical"
@@ -83,14 +82,43 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/inputModelKendaraan"
+                    android:id="@+id/inputMerkMobil"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="20dp"
-                    android:hint="Model Kendaraan"
+                    android:hint="Merk Mobil"
                     android:inputType="text" />
 
             </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/layout_Jenis"
+                style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:hint="Jenis Mobil"
+                android:layout_marginTop="8dp">
+                <AutoCompleteTextView
+                    android:id="@+id/inputJenisMobil"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:inputType="none" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/inputJumlahKursi"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="20dp"
+                    android:hint="input 2-8"
+                    android:inputType="number" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
         </LinearLayout>
 
         <Button
@@ -105,14 +133,13 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/linearLayout5"
-            app:layout_constraintVertical_bias="0.044" />
+            app:layout_constraintVertical_bias="0.0" />
 
         <Button
             android:id="@+id/CekPesanan"
             style="@style/Widget.MaterialComponents.Button.TextButton"
             android:layout_width="139dp"
             android:layout_height="41dp"
-            android:layout_marginTop="8dp"
             android:text="Cek Pesanan"
             android:textColor="#554C3B"
             app:layout_constraintEnd_toEndOf="parent"

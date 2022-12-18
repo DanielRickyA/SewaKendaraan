@@ -24,14 +24,14 @@ import org.junit.runner.RunWith
 
 @LargeTest
 @RunWith(AndroidJUnit4::class)
-class HomeActivityTest {
+class SewaMobilTest {
 
     @Rule
     @JvmField
     var mActivityScenarioRule = ActivityScenarioRule(HomeActivity::class.java)
 
     @Test
-    fun homeActivityTest() {
+    fun sewaMobilTest() {
         // Added a sleep statement to match the app's execution delay.
         // The recommended way to handle such scenarios is to use Espresso idling resources:
         // https://google.github.io/android-testing-support-library/docs/espresso/idling-resource/index.html
@@ -51,6 +51,21 @@ class HomeActivityTest {
             )
         )
         bottomNavigationItemView.perform(click())
+
+        val appCompatImageView = onView(
+            allOf(
+                withId(R.id.imgMobil),
+                childAtPosition(
+                    childAtPosition(
+                        withId(R.id.layout_fragment),
+                        0
+                    ),
+                    0
+                ),
+                isDisplayed()
+            )
+        )
+        appCompatImageView.perform(click())
 
         val materialButton = onView(
             allOf(
@@ -84,7 +99,6 @@ class HomeActivityTest {
         textInputEditText.perform(replaceText("Jakarta"), closeSoftKeyboard())
 
 
-
         val materialButton2 = onView(
             allOf(
                 withId(R.id.btnTambah), withText("Tambah"),
@@ -114,8 +128,7 @@ class HomeActivityTest {
                 isDisplayed()
             )
         )
-        textInputEditText2.perform(replaceText("12-12-2022"), closeSoftKeyboard())
-
+        textInputEditText2.perform(replaceText("12-02-2022"), closeSoftKeyboard())
 
 
         val materialButton3 = onView(
@@ -147,7 +160,7 @@ class HomeActivityTest {
                 isDisplayed()
             )
         )
-        textInputEditText3.perform(replaceText("15-12-2022"), closeSoftKeyboard())
+        textInputEditText3.perform(replaceText("14-02-2022"), closeSoftKeyboard())
 
 
         val materialButton4 = onView(
@@ -168,7 +181,7 @@ class HomeActivityTest {
 
         val textInputEditText4 = onView(
             allOf(
-                withId(R.id.inputModelKendaraan),
+                withId(R.id.inputMerkMobil),
                 childAtPosition(
                     childAtPosition(
                         withClassName(`is`("com.google.android.material.textfield.TextInputLayout")),
@@ -179,7 +192,8 @@ class HomeActivityTest {
                 isDisplayed()
             )
         )
-        textInputEditText4.perform(replaceText("Yamahaa"), closeSoftKeyboard())
+        textInputEditText4.perform(replaceText("Honda"), closeSoftKeyboard())
+
 
         val materialButton5 = onView(
             allOf(
@@ -196,6 +210,133 @@ class HomeActivityTest {
         )
         materialButton5.perform(click())
         onView(isRoot()).perform(waitFor(3000))
+
+        val textInputEditText5 = onView(
+            allOf(
+                withId(R.id.inputJenisMobil),
+                childAtPosition(
+                    childAtPosition(
+                        withId(R.id.layout_Jenis),
+                        0
+                    ),
+                    0
+                ),
+                isDisplayed()
+            )
+        )
+        textInputEditText5.perform(replaceText("Matic"), closeSoftKeyboard())
+
+        val materialButton6 = onView(
+            allOf(
+                withId(R.id.btnTambah), withText("Tambah"),
+                childAtPosition(
+                    childAtPosition(
+                        withClassName(`is`("android.widget.FrameLayout")),
+                        0
+                    ),
+                    2
+                ),
+                isDisplayed()
+            )
+        )
+        materialButton6.perform(click())
+        onView(isRoot()).perform(waitFor(3000))
+
+        val textInputEditText6 = onView(
+            allOf(
+                withId(R.id.inputJumlahKursi),
+                childAtPosition(
+                    childAtPosition(
+                        withClassName(`is`("com.google.android.material.textfield.TextInputLayout")),
+                        0
+                    ),
+                    0
+                ),
+                isDisplayed()
+            )
+        )
+        textInputEditText6.perform(replaceText("1"), closeSoftKeyboard())
+
+        val materialButton7 = onView(
+            allOf(
+                withId(R.id.btnTambah), withText("Tambah"),
+                childAtPosition(
+                    childAtPosition(
+                        withClassName(`is`("android.widget.FrameLayout")),
+                        0
+                    ),
+                    2
+                ),
+                isDisplayed()
+            )
+        )
+        materialButton7.perform(click())
+        onView(isRoot()).perform(waitFor(3000))
+
+        val textInputEditText7 = onView(
+            allOf(
+                withId(R.id.inputJumlahKursi),
+                childAtPosition(
+                    childAtPosition(
+                        withClassName(`is`("com.google.android.material.textfield.TextInputLayout")),
+                        0
+                    ),
+                    0
+                ),
+                isDisplayed()
+            )
+        )
+        textInputEditText7.perform(replaceText("10"), closeSoftKeyboard())
+
+        val materialButton8 = onView(
+            allOf(
+                withId(R.id.btnTambah), withText("Tambah"),
+                childAtPosition(
+                    childAtPosition(
+                        withClassName(`is`("android.widget.FrameLayout")),
+                        0
+                    ),
+                    2
+                ),
+                isDisplayed()
+            )
+        )
+        materialButton8.perform(click())
+        onView(isRoot()).perform(waitFor(3000))
+
+        val textInputEditText8 = onView(
+            allOf(
+                withId(R.id.inputJumlahKursi),
+                childAtPosition(
+                    childAtPosition(
+                        withClassName(`is`("com.google.android.material.textfield.TextInputLayout")),
+                        0
+                    ),
+                    0
+                ),
+                isDisplayed()
+            )
+        )
+        textInputEditText8.perform(replaceText("4"), closeSoftKeyboard())
+
+        val materialButton9 = onView(
+            allOf(
+                withId(R.id.btnTambah), withText("Tambah"),
+                childAtPosition(
+                    childAtPosition(
+                        withClassName(`is`("android.widget.FrameLayout")),
+                        0
+                    ),
+                    2
+                ),
+                isDisplayed()
+            )
+        )
+        materialButton9.perform(click())
+        onView(isRoot()).perform(waitFor(3000))
+
+
+
     }
 
     private fun childAtPosition(
@@ -215,6 +356,7 @@ class HomeActivityTest {
             }
         }
     }
+
     fun waitFor(delay: Long): ViewAction?{
         return object : ViewAction {
             override fun getConstraints(): Matcher<View>{

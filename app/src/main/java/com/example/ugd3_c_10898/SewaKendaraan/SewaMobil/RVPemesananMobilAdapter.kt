@@ -20,10 +20,12 @@ class RVPemesananMobilAdapter (private val data: ArrayList<SewaMobil>, private v
     override fun onBindViewHolder(holder: viewHolder, position: Int){
         val curentItem = data[position]
         holder.Lokasi.text = curentItem.lokasi
-        holder.Model.text = curentItem.modelKendaraan
+        holder.merkMobil.setText(curentItem.merkMobil)
         holder.TanggalPinjam.text = curentItem.tanggalPinjam
         holder.TanggalKembali.text = curentItem.tanggalKembali
-
+        holder.jenismobil.text = curentItem.jenisMobil
+        holder.jumlahKursiMobil.text = curentItem.jumlahKursi.toString()
+        println(curentItem.merkMobil)
         holder.update.setOnClickListener{
             listener.onUpdate(curentItem)
         }
@@ -37,9 +39,11 @@ class RVPemesananMobilAdapter (private val data: ArrayList<SewaMobil>, private v
 
     class viewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
         val Lokasi : TextView = itemView.findViewById(R.id.rvLokasi)
-        val Model : TextView = itemView.findViewById(R.id.rvModel)
+        val merkMobil : TextView = itemView.findViewById(R.id.rvModel)
         val TanggalPinjam : TextView = itemView.findViewById(R.id.rvTanggalPinjam)
         val TanggalKembali : TextView = itemView.findViewById(R.id.rvTanggalKembali)
+        val jenismobil : TextView = itemView.findViewById(R.id.rvJenisMobil)
+        val jumlahKursiMobil : TextView = itemView.findViewById(R.id.rvJumlahKursi)
         val update : ImageView = itemView.findViewById(R.id.EditBtn)
         val download : ImageView = itemView.findViewById((R.id.downloadBtn))
     }

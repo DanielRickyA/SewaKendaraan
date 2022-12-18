@@ -13,6 +13,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
@@ -39,7 +40,9 @@ import java.nio.charset.StandardCharsets
 
 
 class UpdateSewaMobilFragment : Fragment() {
-
+    companion object {
+        private val Jenis_Mobil_list = arrayOf("Matic", "coupling", "listrik")
+    }
     val db by lazy { UserDB(this.requireActivity()) }
     var pref: SharedPreferences? = null
 
@@ -77,8 +80,8 @@ class UpdateSewaMobilFragment : Fragment() {
         val id: Int = requireArguments().getInt("id")
 
 
-        getById(id)
 
+        getById(id)
         createNotificationChanel()
 
         binding.btnUpdateSewa.setOnClickListener {
@@ -95,6 +98,7 @@ class UpdateSewaMobilFragment : Fragment() {
 
         }
     }
+
 //    Get By Id
     private fun getById(id: Int){
     val stringRequest: StringRequest = object :
@@ -106,7 +110,10 @@ class UpdateSewaMobilFragment : Fragment() {
             binding.inputLokasi.setText(sewa.lokasi)
             binding.inputTanggalPinjam.setText(sewa.tanggalPinjam)
             binding.inputTanggalKembali.setText(sewa.tanggalKembali)
-            binding.inputModelKendaraan.setText(sewa.modelKendaraan)
+            binding.inputMerkMobil.setText(sewa.merkMobil)
+            binding.inputJenisMobil.setText(sewa.jenisMobil)
+            binding.inputJumlahKursi.setText(sewa.jumlahKursi.toString())
+            setExposedDropdownMenu()
         }, Response.ErrorListener { error ->
             try {
                 val responseBody = String(error.networkResponse.data, StandardCharsets.UTF_8)
@@ -127,11 +134,13 @@ class UpdateSewaMobilFragment : Fragment() {
     queue!!.add(stringRequest)
 }
 
+
 //    Update Sewa Kendaraan
     private fun UpdateSewaKendaraan(id : Int){
     val sewa = SewaMobil(
         binding.inputLokasi.text.toString(), binding.inputTanggalPinjam.text.toString(),
-        binding.inputTanggalKembali.text.toString(), binding.inputModelKendaraan.text.toString()
+        binding.inputTanggalKembali.text.toString(), binding.inputMerkMobil.text.toString(),
+        binding.inputJenisMobil.text.toString(), binding.inputJumlahKursi.text.toString(),
     )
 
     val stringRequest : StringRequest = object :
@@ -183,6 +192,12 @@ class UpdateSewaMobilFragment : Fragment() {
         }
     }
     queue!!.add(stringRequest)
+    }
+    fun setExposedDropdownMenu(){
+        val adapterJenis: ArrayAdapter<String> = ArrayAdapter<String>(
+            requireActivity(),
+            R.layout.item_list, Jenis_Mobil_list)
+            binding.inputJenisMobil.setAdapter(adapterJenis)
     }
 
     private fun deleteSewa(id : Int){
@@ -287,7 +302,7 @@ class UpdateSewaMobilFragment : Fragment() {
                 NotificationCompat.BigTextStyle()
                     .bigText(
                         "Halo Cyclers terima kasih sudah memperbaharui data pemesanan dalam menyewa Jasa Cycle kami yang dimana "+
-                        "data pemesanan yang terbaru berupa lokasi ("+binding?.inputLokasi?.text.toString()+"), model kendaraan ("+binding?.inputModelKendaraan?.text.toString()
+                        "data pemesanan yang terbaru berupa lokasi ("+binding?.inputLokasi?.text.toString()+"), model kendaraan ("+binding?.inputMerkMobil?.text.toString()
                                 +"), tanggal pinjam ("+binding?.inputTanggalPinjam?.text.toString()+") dan tanggal kembali ("+binding?.inputTanggalKembali?.text.toString()+"). "
                                 +"Jasa Cycle - Aman, Cepat, Praktis dan Terpercaya"
                     )
@@ -321,7 +336,7 @@ class UpdateSewaMobilFragment : Fragment() {
             .setStyle(
                 NotificationCompat.InboxStyle()
                     .addLine("Lokasi : "+binding?.inputLokasi?.text.toString())
-                    .addLine("Model Kendaraan : "+binding?.inputModelKendaraan?.text.toString())
+                    .addLine("Model Kendaraan : "+binding?.inputMerkMobil?.text.toString())
                     .addLine("Tanggal Pinjam : "+binding?.inputTanggalPinjam?.text.toString())
                     .addLine("Tanggal Kembali : "+binding?.inputTanggalKembali?.text.toString())
                     .setBigContentTitle("Jasa Cycle")

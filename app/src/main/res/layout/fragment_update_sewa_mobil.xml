@@ -11,27 +11,26 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/textView2"
-        style="@style/TextAppearance.AppCompat.Display1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
-        android:layout_marginBottom="1dp"
-        android:text="Sewa Kendaraan"
-        android:textColor="@color/black"
-        app:layout_constraintBottom_toTopOf="@+id/linearLayout5"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.036" />
+        <TextView
+            android:id="@+id/textView2"
+            style="@style/TextAppearance.AppCompat.Display1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="60dp"
+            android:text="Sewa Kendaraan"
+            android:textColor="@color/black"
+            app:layout_constraintBottom_toTopOf="@+id/linearLayout5"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.036" />
 
         <LinearLayout
             android:id="@+id/linearLayout5"
             android:layout_width="0dp"
-            android:layout_height="0dp"
+            android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="64dp"
+            android:layout_marginTop="32dp"
             android:layout_marginEnd="16dp"
             android:layout_marginBottom="250dp"
             android:orientation="vertical"
@@ -82,13 +81,43 @@
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
+
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/inputModelKendaraan"
+                    android:id="@+id/inputMerkMobil"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="20dp"
-                    android:hint="Model Kendaraan"
+                    android:hint="Merk Mobil"
                     android:inputType="text" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:hint="Jenis Mobil"
+                android:layout_marginTop="8dp">
+                <AutoCompleteTextView
+                    android:id="@+id/inputJenisMobil"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:inputType="none" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/inputJumlahKursi"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="20dp"
+                    android:hint="input 2-8"
+                    android:inputType="number" />
 
             </com.google.android.material.textfield.TextInputLayout>
         </LinearLayout>
@@ -97,13 +126,16 @@
             android:id="@+id/btnUpdateSewa"
             android:layout_width="273dp"
             android:layout_height="47dp"
-            android:layout_marginBottom="220dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="8dp"
             android:text="Update"
             android:textColor="@color/black"
             app:backgroundTint="#B5B593"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintHorizontal_bias="0.475"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout5" />
 
         <Button
             android:id="@+id/btnBack"
@@ -122,12 +154,14 @@
             style="@style/Widget.MaterialComponents.Button.TextButton"
             android:layout_width="86dp"
             android:layout_height="39dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
             android:text="Delete"
             android:textColor="#FF0000"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@+id/btnUpdateSewa" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

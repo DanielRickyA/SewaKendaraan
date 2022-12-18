@@ -58,7 +58,7 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginTop="32dp"
-            android:layout_marginBottom="50dp"
+            android:layout_marginBottom="120dp"
             android:orientation="vertical"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -142,6 +142,7 @@
                 android:textAlignment="center"
                 android:textColor="@color/black"
                 android:textSize="20sp" />
+
         </LinearLayout>
 
         <Button
@@ -156,6 +157,21 @@
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab_add"
+            android:layout_width="54dp"
+            android:layout_height="61dp"
+            android:layout_margin="16dp"
+            android:src="@drawable/ic_message_24"
+            app:backgroundTint="#97AF9D67"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.907" />
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

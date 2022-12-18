@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.Toast
 import androidx.core.app.NotificationCompat
@@ -33,6 +34,7 @@ import java.nio.charset.StandardCharsets
 
 
 class SewaMobilFragment : Fragment() {
+    private  val Jenis_Mobil_list = arrayOf("Matic", "coupling", "listrik")
 
     // Code Room untuk Users
     val db by lazy { UserDB(this.requireActivity()) }
@@ -59,11 +61,9 @@ class SewaMobilFragment : Fragment() {
         queue = Volley.newRequestQueue(requireContext())
         val btn: Button = view.findViewById(R.id.btnTambah)
         val cek: Button = view.findViewById(R.id.CekPesanan)
+        setExposedDropdownMenu()
         btn.setOnClickListener {
-
-        CreateSewa()
-
-
+            CreateSewa()
         }
         cek.setOnClickListener{
             (activity as HomeActivity).changeFragment(RVShowPemesananMobil())
@@ -73,9 +73,13 @@ class SewaMobilFragment : Fragment() {
 
 //  Create Sewa Mobil
     private fun CreateSewa(){
+
         val sewa = SewaMobil(
             binding.inputLokasi.text.toString(), binding.inputTanggalPinjam.text.toString(),
-            binding.inputTanggalKembali.text.toString(), binding.inputModelKendaraan.text.toString()
+            binding.inputTanggalKembali.text.toString(), binding.inputMerkMobil.text.toString(),
+            binding.inputJenisMobil.text.toString(),
+            binding.inputJumlahKursi.text.toString()
+
         )
 
     val stringRequest: StringRequest =
@@ -117,6 +121,13 @@ class SewaMobilFragment : Fragment() {
             }
         }
     queue!!.add(stringRequest)
+    }
+
+    fun setExposedDropdownMenu(){
+        val adapterJenis: ArrayAdapter<String> = ArrayAdapter<String>(
+            requireActivity(),
+            R.layout.item_list, Jenis_Mobil_list)
+        binding.inputJenisMobil.setAdapter(adapterJenis)
     }
 
 
