@@ -21,6 +21,7 @@ import com.example.ugd3_c_10898.api.TubesApi
 import com.example.ugd3_c_10898.databinding.FragmentProfileBinding
 import com.example.ugd3_c_10898.models.User
 import com.example.ugd3_c_10898.room.user.UserDB
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.gson.Gson
 import org.json.JSONObject
 import java.nio.charset.StandardCharsets
@@ -71,9 +72,16 @@ class ProfileFragment : Fragment() {
         }
 
         binding.btnExit.setOnClickListener{
-            val intent = Intent(activity, MainActivity::class.java)
-            startActivity(intent)
-            activity?.finish()
+            val materialAlertDialogBuilder = MaterialAlertDialogBuilder(requireContext())
+            materialAlertDialogBuilder.setTitle("Konfirmasi")
+                .setMessage("Apakah anda yakin keluar?")
+                .setNegativeButton("Batal", null)
+                .setPositiveButton("Logout"){_,_ ->
+                    val intent = Intent(activity, MainActivity::class.java)
+                    startActivity(intent)
+                    activity?.finish()
+                }.show()
+
         }
 
         binding.btnProfil.setOnClickListener{

@@ -31,6 +31,7 @@ import com.example.ugd3_c_10898.databinding.FragmentUpdateSewaMotorBinding
 import com.example.ugd3_c_10898.models.SewaMotor
 //import com.example.ugd3_c_10898.room.User.Use
 import com.example.ugd3_c_10898.room.user.UserDB
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.fragment_update_sewa_motor.*
 import org.json.JSONObject
@@ -93,9 +94,13 @@ class UpdateSewaMotorFragment : Fragment() {
         }
 
         binding.btnDeleteSewa.setOnClickListener {
-            deleteSewa(id)
-
-
+            val materialAlertDialogBuilder = MaterialAlertDialogBuilder(requireContext())
+            materialAlertDialogBuilder.setTitle("Konfirmasi")
+                .setMessage("Apakah anda yakin ingin menghapus List ini?")
+                .setNegativeButton("Batal", null)
+                .setPositiveButton("Hapus"){_,_ ->
+                    deleteSewa(id)
+                }.show()
         }
     }
 

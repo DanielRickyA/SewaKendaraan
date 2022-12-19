@@ -24,6 +24,7 @@ import com.android.volley.Response
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import com.example.ugd3_c_10898.HomeActivity
+import com.example.ugd3_c_10898.KritikSaran.KritikSaranActivity
 import com.example.ugd3_c_10898.NotificationReceiver
 import com.example.ugd3_c_10898.R
 import com.example.ugd3_c_10898.api.TubesApi
@@ -31,6 +32,7 @@ import com.example.ugd3_c_10898.databinding.FragmentUpdateSewaMobilBinding
 import com.example.ugd3_c_10898.models.SewaMobil
 //import com.example.ugd3_c_10898.room.User.Use
 import com.example.ugd3_c_10898.room.user.UserDB
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.fragment_update_sewa_mobil.*
 import org.json.JSONObject
@@ -93,9 +95,13 @@ class UpdateSewaMobilFragment : Fragment() {
         }
 
         binding.btnDeleteSewa.setOnClickListener {
-            deleteSewa(id)
-
-
+            val materialAlertDialogBuilder = MaterialAlertDialogBuilder(requireContext())
+            materialAlertDialogBuilder.setTitle("Konfirmasi")
+                .setMessage("Apakah anda yakin ingin menghapus List ini?")
+                .setNegativeButton("Batal", null)
+                .setPositiveButton("Hapus"){_,_ ->
+                    deleteSewa(id)
+                }.show()
         }
     }
 
