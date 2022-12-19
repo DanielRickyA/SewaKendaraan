@@ -46,7 +46,7 @@ class TambahEditKritkSaran : AppCompatActivity() {
         val tvTitle = findViewById<TextView>(R.id.tv_title)
         val id = intent.getIntExtra("id", -1)
         if(id== -1){
-            tvTitle.setText("Tambah Kritik Sarah")
+            tvTitle.setText("Tambah Kritik Saran")
             btnSave.setOnClickListener { createKritikSaran() }
         }else{
             tvTitle.setText("Edit Kritik Saran")

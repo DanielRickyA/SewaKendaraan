@@ -73,7 +73,7 @@ class KritikSaranActivity : AppCompatActivity() {
     private fun getAllKritikSaran(){
         sr_kritikSaran!!.isRefreshing = true
         val stringRequest : StringRequest = object:
-            StringRequest(Method.GET, TubesApi.getAllKritkSaran, Response.Listener { response ->
+            StringRequest(Method.GET, TubesApi.getAllKritikSaran, Response.Listener { response ->
                 val gson = Gson()
                 val jsonObject = JSONObject(response)
                 var kritik : Array<KritikSaran> = gson.fromJson(jsonObject.getJSONArray("data").toString(), Array<KritikSaran>::class.java)

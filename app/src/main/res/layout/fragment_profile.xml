@@ -25,18 +25,31 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.457" />
 
-        <Button
+        <com.airbnb.lottie.LottieAnimationView
             android:id="@+id/btnProfil"
             android:layout_width="211dp"
-            android:layout_height="177dp"
+            android:layout_height="150dp"
             android:layout_marginTop="64dp"
-            android:background="@drawable/ic_user_24"
-            app:backgroundTint="@color/black"
+            app:lottie_rawRes="@raw/user"
+            app:lottie_autoPlay="true"
+            app:lottie_loop="true"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.0" />
+<!--        <Button-->
+<!--            android:id="@+id/btnProfil"-->
+<!--            android:layout_width="211dp"-->
+<!--            android:layout_height="177dp"-->
+<!--            android:layout_marginTop="64dp"-->
+<!--            android:background="@drawable/ic_user_24"-->
+<!--            app:backgroundTint="@color/black"-->
+<!--            app:layout_constraintBottom_toBottomOf="parent"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:layout_constraintTop_toTopOf="parent"-->
+<!--            app:layout_constraintVertical_bias="0.0" />-->
 
         <Button
             android:id="@+id/EditButton"
