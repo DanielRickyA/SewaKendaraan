@@ -1,60 +1,186 @@
 package com.example.ugd3_c_10898.SewaKendaraan.SewaMotor
 
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.content.Context
+import android.graphics.Color
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
+import android.widget.Button
+import android.widget.Toast
+import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationManagerCompat
+import com.android.volley.AuthFailureError
+import com.android.volley.RequestQueue
+import com.android.volley.Response
+import com.android.volley.toolbox.StringRequest
+import com.android.volley.toolbox.Volley
+import com.example.ugd3_c_10898.HomeActivity
 import com.example.ugd3_c_10898.R
+import com.example.ugd3_c_10898.api.TubesApi
+import com.example.ugd3_c_10898.databinding.FragmentSewaMotorBinding
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
+import com.example.ugd3_c_10898.models.SewaMotor
+import com.google.gson.Gson
+import org.json.JSONObject
+import java.nio.charset.StandardCharsets
 
-/**
- * A simple [Fragment] subclass.
- * Use the [SewaMotorFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
+
 class SewaMotorFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+    private  val Jenis_Mobil_list = arrayOf("Coupling", "Matic", "Cub (Bebek)")
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
+    // Code Room untuk Users
+    private var _binding: FragmentSewaMotorBinding? = null
+    private val binding get() = _binding!!
+    private val CHANNEL_ID_1 = "channel_notification_01"
+    private val CHANNEL_ID_2 = "channel_notification_02"
+    private val noticationId1 = 101
+    private val noticationId2 = 102
+    private var queue: RequestQueue? = null
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_sewa_motor, container, false)
+
+        _binding = FragmentSewaMotorBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment SewaMotorFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            SewaMotorFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        queue = Volley.newRequestQueue(requireContext())
+        val btn: Button = view.findViewById(R.id.btnTambah)
+        val cek: Button = view.findViewById(R.id.CekPesanan)
+        setExposedDropdownMenu()
+        btn.setOnClickListener {
+            CreateSewa()
+        }
+        cek.setOnClickListener{
+            (activity as HomeActivity).changeFragment(RVShowPemesananMotor())
+        }
+
+    }
+
+    //  Create Sewa Motor
+    private fun CreateSewa(){
+        val sewa = SewaMotor(
+            binding.inputLokasi.text.toString(), binding.inputTanggalPinjam.text.toString(),
+            binding.inputTanggalKembali.text.toString(), binding.inputMerkMotor.text.toString(),
+            binding.inputJenisMotor.text.toString(),
+        )
+
+        val stringRequest: StringRequest =
+            object : StringRequest(Method.POST, TubesApi.createSewaMotor, Response.Listener { response ->
+
+                Toast.makeText(context, JSONObject(response).getString("message"), Toast.LENGTH_SHORT).show()
+                createNotificationChanel()
+                sendNotification()
+                (activity as HomeActivity).changeFragment(RVShowPemesananMotor())
+            }, Response.ErrorListener { error ->
+                try {
+                    val responseBody = String(error.networkResponse.data, StandardCharsets.UTF_8)
+                    val errors = JSONObject(responseBody)
+                    Toast.makeText(
+                        requireContext(),
+                        errors.getString("message"),
+                        Toast.LENGTH_SHORT
+                    ).show()
+                } catch (e: Exception) {
+                    Toast.makeText(requireActivity(), e.message, Toast.LENGTH_SHORT).show()
+                }
+            }){
+                @Throws(AuthFailureError::class)
+                override fun getHeaders(): Map<String, String> {
+                    val headers = HashMap<String, String>()
+                    headers["Accept"] = "application/json"
+                    return headers
+                }
+
+                @Throws(AuthFailureError::class)
+                override fun getBody(): ByteArray {
+                    val gson = Gson()
+                    val requestBody = gson.toJson(sewa)
+                    return requestBody.toByteArray(StandardCharsets.UTF_8)
+                }
+
+                override fun getBodyContentType(): String {
+                    return "application/json"
                 }
             }
+        queue!!.add(stringRequest)
+    }
+
+    fun setExposedDropdownMenu(){
+        val adapterJenis: ArrayAdapter<String> = ArrayAdapter<String>(
+            requireActivity(),
+            R.layout.item_list, Jenis_Mobil_list)
+        binding.inputJenisMotor.setAdapter(adapterJenis)
+    }
+
+    private fun createNotificationChanel(){
+        val name = "Notification Title"
+        val descriptionText = "Notification Description"
+
+        val channel1 = NotificationChannel(CHANNEL_ID_1, name, NotificationManager.IMPORTANCE_DEFAULT).apply {
+            description = descriptionText
+        }
+        val channel2 = NotificationChannel(CHANNEL_ID_2, name, NotificationManager.IMPORTANCE_DEFAULT).apply {
+            description = descriptionText
+        }
+
+        val notificationManager = activity?.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        notificationManager.createNotificationChannel(channel1)
+        notificationManager.createNotificationChannel(channel2)
+    }
+
+    private fun sendNotification() {
+        val SUMMARY_ID = 0
+        val GROUP_KEY_WORK_EMAIL = "com.android.example.WORK_EMAIL"
+
+        val newMessageNotification1 = NotificationCompat.Builder(this.requireContext(), CHANNEL_ID_1)
+            .setSmallIcon(R.drawable.ic_mail_24)
+            .setContentTitle("Jasa Cycle Fast")
+            .setContentText("Selamat Anda Berhasil Melakukan Pemesanan")
+            .setGroup(GROUP_KEY_WORK_EMAIL)
+            .build()
+
+        val newMessageNotification2 = NotificationCompat.Builder(this.requireContext(), CHANNEL_ID_1)
+            .setSmallIcon(R.drawable.ic_mail_24)
+            .setContentTitle("Deni Sumargo")
+            .setStyle(
+                NotificationCompat.BigTextStyle()
+                    .bigText(
+                        "Untuk Pemesanan ini segera menyertakan identitas lewat nomor 084443766577 ya agar segera diverivikasi"
+                    )
+            )
+            .setGroup(GROUP_KEY_WORK_EMAIL)
+            .build()
+        val summaryNotification = NotificationCompat.Builder(this.requireContext(), CHANNEL_ID_1)
+            .setContentTitle("Pesan Penting")
+            //set content text to support devices running API level < 24
+            .setContentText("Two new messages")
+            .setSmallIcon(R.drawable.ic_mail_24)
+            //build summary info into InboxStyle template
+            .setStyle(NotificationCompat.InboxStyle()
+                .setBigContentTitle("2 new messages")
+                .setSummaryText("JasaFast@gmail.com"))
+            //specify which group this notification belongs to
+            .setGroup(GROUP_KEY_WORK_EMAIL)
+            //set this notification as the summary for the group
+            .setGroupSummary(true)
+            .setColor(Color.RED)
+            .build()
+
+        NotificationManagerCompat.from(this.requireContext()).apply {
+            notify(noticationId1, newMessageNotification1)
+            notify(noticationId2, newMessageNotification2)
+            notify(SUMMARY_ID, summaryNotification)
+        }
     }
 }

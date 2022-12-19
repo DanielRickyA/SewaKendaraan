@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".SewaKendaraan.SewaMotor.SewaMotorFragment">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".SewaKendaraan.SewaMotor.UpdateSewaMotorFragment">
 
-
+    <!-- TODO: Update blank fragment layout -->
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
         <TextView
             android:id="@+id/textView2"
@@ -17,7 +17,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="60dp"
-            android:text="Sewa Kendaraan Motor"
+            android:text="Sewa Kendaraan"
             android:textColor="@color/black"
             app:layout_constraintBottom_toTopOf="@+id/linearLayout5"
             app:layout_constraintEnd_toEndOf="parent"
@@ -81,6 +81,7 @@
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
+
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/inputMerkMotor"
                     android:layout_width="match_parent"
@@ -92,7 +93,6 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/layout_Jenis"
                 style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -106,33 +106,51 @@
                     android:inputType="none" />
 
             </com.google.android.material.textfield.TextInputLayout>
+
         </LinearLayout>
 
         <Button
-            android:id="@+id/btnTambah"
+            android:id="@+id/btnUpdateSewa"
             android:layout_width="273dp"
             android:layout_height="47dp"
-            android:layout_marginBottom="300dp"
-            android:text="Tambah"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="8dp"
+            android:text="Update"
             android:textColor="@color/black"
             app:backgroundTint="#B5B593"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.475"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/linearLayout5"
-            app:layout_constraintVertical_bias="0.0" />
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout5" />
 
         <Button
-            android:id="@+id/CekPesanan"
+            android:id="@+id/btnBack"
             style="@style/Widget.MaterialComponents.Button.TextButton"
-            android:layout_width="139dp"
-            android:layout_height="41dp"
-            android:text="Cek Pesanan"
+            android:layout_width="66dp"
+            android:layout_height="35dp"
+            android:text="back"
             android:textColor="#554C3B"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/btnTambah" />
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/btnDeleteSewa"
+            style="@style/Widget.MaterialComponents.Button.TextButton"
+            android:layout_width="86dp"
+            android:layout_height="39dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
+            android:text="Delete"
+            android:textColor="#FF0000"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btnUpdateSewa" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-</FrameLayout>
+</LinearLayout>
+

@@ -4,7 +4,6 @@ class TubesApi {
     companion object{
         val BASE_URL = "https://dev.ksaduajy.com/adroid-apiserver/api/"
 
-
         val register = BASE_URL + "register"
         val login = BASE_URL + "login"
         val getUserId = BASE_URL + "user/"
@@ -16,13 +15,16 @@ class TubesApi {
         val updateSewa = BASE_URL + "SewaKendaraan/"
         val deleteSewa = BASE_URL + "SewaKendaraan/"
 
-        val getAllKritkSaran = BASE_URL + "KritikSaran"
+        val getAllSewaMotor = BASE_URL + "SewaMotor"
+        val getByIdSewaMotor = BASE_URL + "SewaMotor/"
+        val createSewaMotor = BASE_URL + "SewaMotor"
+        val updateSewaMotor = BASE_URL + "SewaMotor/"
+        val deleteSewaMotor = BASE_URL + "SewaMotor/"
+
+        val getAllKritikSaran = BASE_URL + "KritikSaran"
         val getByIDKritikSaran = BASE_URL + "KritikSaran/"
         val createKritikSaran = BASE_URL + "KritikSaran"
-        val updateKritikSaran= BASE_URL + "KritikSaran/"
+        val updateKritikSaran = BASE_URL + "KritikSaran/"
         val deleteKritikSaran = BASE_URL + "KritikSaran/"
-
-
-
     }
 }
